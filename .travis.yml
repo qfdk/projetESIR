@@ -1,0 +1,7 @@
+language: bash
+
+notifications:
+  slack: projetesir2:llsZUX6Oj3AvE6hV4U7SCmHD
+  
+script:
+  echo "coucousalifou"
