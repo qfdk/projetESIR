@@ -1,6 +1,7 @@
-# Rasperry Pi Cam [![Build Status](https://travis-ci.org/qfdk/projetESIR.svg?branch=master)](https://travis-ci.org/qfdk/projetESIR)
-
-
+# Rasperry Pi avec Sony HDR-AS30v 
+[![BuildStatus](https://travis-ci.org/qfdk/projetESIR.svg?branch=master)](https://travis-ci.org/qfdk/projetESIR)
+[![Platform](https://img.shields.io/badge/platform-Linux,%20Raspberry-green.svg?style=flat)](https://qfdk.me) 
+[![License](https://img.shields.io/badge/license-New%20BSD-yellow.svg?style=flat)](LICENSE)
 ## Etapes
 
 modifier `/etc/apt/sources.list`
@@ -20,4 +21,5 @@ add -> `deb http://vontaene.de/raspbian-updates/ . main`
 
 
 ## License New BSD
+World is powered by solitude
 ![img-source-from-https://github.com/docker/dockercraft](https://github.com/docker/dockercraft/raw/master/docs/img/contribute.png?raw=true)
