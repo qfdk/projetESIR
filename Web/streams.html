@@ -8,11 +8,7 @@
     <meta name="author" content="">
     <link rel="shortcut icon" href="assets/ico/favicon.png">
 
-<<<<<<< HEAD:Web/about.html
     <title>Live Stream Interface</title>
-=======
-    <title>Live Stream Channel</title>
->>>>>>> 5c2b37a2e403ed28f886b12669a6c60e63d2ae0a:Web/streams.html
 
     <!-- Bootstrap core CSS -->
     <link href="assets/css/bootstrap.css" rel="stylesheet">
@@ -22,13 +18,26 @@
     <link href="assets/css/main.css" rel="stylesheet">
 
 	<script src="assets/js/Chart.js"></script>
-
+  
+  <script type="text/javascript">
+    function AddLink()
+    {
+        var str = '';
+        var elem = document.getElementById('links').elements[0].value+"</BR>";
+        str+=elem;
+        document.getElementById('lblValues').innerHTML += str;
+    }
+    
+    
+</script>
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
       <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
     <![endif]-->
+  
+  
   </head>
 
   <body>
@@ -57,7 +66,18 @@
     </div>
 
 
-	<div class="container w">
+
+<div class="container w">
+      <form id="links" name="links">
+        <input type="text" name="link" value="The link here ........" /><br />
+        <br/>
+        <input type="button" value="Add" onclick="AddLink();" /> 
+    </form>
+    <hr />
+    <div id="lblValues"></div>
+
+    
+  
 		<div class="row centered">
 			<br><br>
 			<div class="col-lg-4">
@@ -65,30 +85,27 @@
 				<h4>Video 1</h4>
 				<p>Ici description video 1</p>
 				<p><a href="#">@nom_du_streameur</a></p>
-			</div><!-- col-lg-3 -->
+			</div>
 
 			<div class="col-lg-4">
         <iframe width="300" height="200" src="https://www.youtube.com/embed/qFdk-QpSIeU" frameborder="0" allowfullscreen></iframe>
 				<h4>Video 2</h4>
 				<p>Ici description video 2</p>
 				<p><a href="#">@nom_du_streameur</a></p>
-			</div><!-- col-lg-3 -->
-
+			</div>
 			<div class="col-lg-4">
         <iframe width="300" height="200" src="https://www.youtube.com/embed/qFdk-QpSIeU" frameborder="0" allowfullscreen></iframe>
 				<h4>Video 3</h4>
 				<p>Ici description video 3</p>
 				<p><a href="#">@nom_du_streameur</a></p>
-			</div><!-- col-lg-3 -->
-
+			</div>
 		<div class="col-lg-4">
         <iframe width="300" height="200" src="https://www.youtube.com/embed/qFdk-QpSIeU" frameborder="0" allowfullscreen></iframe>
 				<h4>Video 4</h4>
 				<p>Ici description video  4</p>
 				<p><a href="#">@nom_du_streameur</a></p>
-			</div><!-- col-lg-3 -->
+			</div>
 			
-
 		</div><!-- row -->
 		<br>
 		<br>
