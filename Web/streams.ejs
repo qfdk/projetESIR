@@ -17,14 +17,14 @@
     <!-- Custom styles for this template -->
     <link href="css/main.css" rel="stylesheet">
 
-	<script src="js/Chart.js"></script>
-
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
       <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
     <![endif]-->
+  
+  
   </head>
 
   <body>
@@ -51,7 +51,18 @@
     </div>
 
 
-	<div class="container w">
+
+<div class="container w">
+      <form id="links" name="links">
+        <input type="text" name="link" value="The link here ........" /><br />
+        <br/>
+        <input type="button" value="Add" onclick="AddLink();" /> 
+    </form>
+    <hr />
+    <div id="lblValues"></div>
+
+    
+  
 		<div class="row centered">
 			<br><br>
 			<div class="col-lg-4">
@@ -59,30 +70,27 @@
 				<h4>Video 1</h4>
 				<p>Ici description video 1</p>
 				<p><a href="#">@nom_du_streameur</a></p>
-			</div><!-- col-lg-3 -->
+			</div>
 
 			<div class="col-lg-4">
         <iframe width="300" height="200" src="https://www.youtube.com/embed/qFdk-QpSIeU" frameborder="0" allowfullscreen></iframe>
 				<h4>Video 2</h4>
 				<p>Ici description video 2</p>
 				<p><a href="#">@nom_du_streameur</a></p>
-			</div><!-- col-lg-3 -->
-
+			</div>
 			<div class="col-lg-4">
         <iframe width="300" height="200" src="https://www.youtube.com/embed/qFdk-QpSIeU" frameborder="0" allowfullscreen></iframe>
 				<h4>Video 3</h4>
 				<p>Ici description video 3</p>
 				<p><a href="#">@nom_du_streameur</a></p>
-			</div><!-- col-lg-3 -->
-
+			</div>
 		<div class="col-lg-4">
         <iframe width="300" height="200" src="https://www.youtube.com/embed/qFdk-QpSIeU" frameborder="0" allowfullscreen></iframe>
 				<h4>Video 4</h4>
 				<p>Ici description video  4</p>
 				<p><a href="#">@nom_du_streameur</a></p>
-			</div><!-- col-lg-3 -->
+			</div>
 			
-
 		</div><!-- row -->
 		<br>
 		<br>
