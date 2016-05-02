@@ -6,6 +6,13 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+    "dependencies": {
+        "node-mysql": "latest",
+        "express": "latest",
+        "url": "latest",
+        "path": "latest",
+	"ejs":"latest"
+    },
   "author": "KFCteam",
   "license": "ISC"
 }
