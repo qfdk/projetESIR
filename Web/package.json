@@ -11,7 +11,11 @@
         "express": "latest",
         "url": "latest",
         "path": "latest",
-		"ejs":"latest"
+		"ejs":"latest",
+		"socket.io":"latest",
+		"socket.io":"latest"
+
+		
     },
   "author": "KFCteam",
   "license": "ISC"

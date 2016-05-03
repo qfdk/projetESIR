@@ -24,7 +24,7 @@ var db =  new DB({
     database : 'Projet_esir',
     connectionLimit: 50,
     useTransaction: {
-        connectionLimit: 1
+    connectionLimit: 1
     }
 });
 // -----------------index-----------------
