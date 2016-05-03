@@ -1,0 +1,34 @@
+#Projet SI ESIR 2 : Documentation
+
+
+##Introduction
+
+
+   * Dans le cadre de notre formation d'ingénieur, nous avons la possibilité de réaliser un projet en deuxième année. Les enseignants Johann Bourcier et Olivier Barais nous ont proposé trois projets et notre choix s'est porté sur "Utiliser un ensemble de Raspberry Pi pour assembler, enregistrer, encoder et diffuser un ensemble de flux vidéos enregistrés via des caméras."
+##Définition du projet
+
+
+   * L'une des fonctionnalités les plus importantes de la librairie de filtrage ffmpeg est la capacité de créer des couches permettant aux utilisateurs de mettre une vidéo par dessus l'autre. On peut aussi utiliser cette fonctionnalité pour implémenter la sortie vidéo en mosaïque. Souvent utilisé dans les systèmes de surveillance, nous aimerions permettre l'emploi d'un ensemble de Raspberry Pis pour créer un scénario dans lequel on pourrait créer des couches et diffuser en temps réel un ensemble de vidéos utilisant l'ensemble de Raspberry Pi. Le but serait de déterminer si on pourrait bénéficier d'un cluster pour améliorer la séparation des intérêts entre plusieurs tâches qui peuvent être : l'encodage vidéo, les couches vidés et la diffusion de vidéos. Un scénario valide peut être un produit low-cost pour créer des outils de cours en ligne pour les enseignants.
+   * 
+##Participants
+
+
+   * Les participants au projet sont : 
+          * - Ilyass Azaroual
+       * - Baptiste Buron
+       * - Bastien Cloarec
+       * - Pierre-Henri Collin
+       * - Kévin Ledy
+       * - Haozi Li
+       * - Youssouf Maiga
+       * - Steven Pescheteau
+       * - Alexandre Quettier
+       * - Benjamin Vion
+##Organisation
+
+##Tâches réalisées
+
+###Partie NGINX - Load Balancing
+
+Image architecure + algorigramme
+
