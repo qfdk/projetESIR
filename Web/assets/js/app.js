@@ -13,7 +13,7 @@ $('#btnpressed').click(function(e) {
 
 $('#loginform').submit(function(){
 	
-		socket.emit('createaccount',{
+		socket.emit('createnewuser',{
 			firstname :$('#nom').val(),
 			secondname :$('#prenom').val(),
 			email :$('#email').val(),

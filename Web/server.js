@@ -44,6 +44,7 @@ res.render('streams');
 });
    
 app.get('/createaccount', function(req, res) {
+	// res.end
 res.render('createaccount');
    
 });
@@ -53,23 +54,33 @@ res.render('createaccount');
 	 // L'utilisateur va créer un compte
 io.sockets.on('connection', function(socket){
 
-	socket.on('createaccount',function(user){
-	console.log("je suis la ");
-	var basicTest = function(cb) {
-    db.connect(function(conn, cb) {
-        cps.seq([
-            function(_, cb) {
-                conn.query('select * from  login_web', cb);
+	socket.on('createnewuser',function(user){
+	console.log(user);
 
-            },
-            function(res, cb) {
-                console.log(res);
-                cb();
-            }
-        ], cb);
-    }, cb);
-};
+    db.connect(function(conn) {
+       console.log(conn);
+       conn.query('select * from login_web ', function(err,data){
+       		console.log(data);
+
+	var post = {
+		nom:user.firstname,
+		prenom:user.secondname,
+		identifiant:user.identifiant,
+		mdp:user.mdp,
+		email:user.email
+		};
+       	conn.query('INSERT INTO login_web SET ?', post, function(error) {
+        if (error) {
+            console.log(error.message);
+        } else {
+            console.log('success');    
+        }
+       });
+
+    });
+
  });
+     });
 
 	// 
 	// 
