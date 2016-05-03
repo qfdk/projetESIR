@@ -56,18 +56,16 @@
     
     <div class="col-md-4">
       <section class="login-form">
-        <form method="post" action="#" role="login">
+        <form method="post" id="connectionform" action="#" role="login">
 				<h3>   Login To STREAM <i class="fa fa-video-camera" aria-hidden="true"></i></h3>
 
-		<input type="email" name="email" placeholder="Email" required class="form-control input-lg" />
-          
-          <input type="password" class="form-control input-lg" id="password" placeholder="Password" required="" />
-          
-          
+		  <input type="email" name="email" placeholder="Email" required class="form-control input-lg" />
+      <input type="password" class="form-control input-lg" id="password" placeholder="Password" required="" />
+        
           <div class="pwstrength_viewport_progress"></div>
           
           
-          <button type="submit" name="go" class="btn btn-lg btn-primary btn-block">Sign in</button>
+          <button type="submit" name="go"  class="btn btn-lg btn-primary btn-block">Sign in</button>
           <div>
             <a href="/createaccount">Create account</a> or <a href="#">reset password</a>
           </div>
@@ -91,5 +89,8 @@
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
+   <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
+    <script src="js/app.js"></script>
+
   </body>
 </html>

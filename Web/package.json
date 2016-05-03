@@ -11,7 +11,7 @@
         "express": "latest",
         "url": "latest",
         "path": "latest",
-	"ejs":"latest"
+		"ejs":"latest"
     },
   "author": "KFCteam",
   "license": "ISC"

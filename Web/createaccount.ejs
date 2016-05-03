@@ -55,19 +55,19 @@
     
     <div class="col-md-4">
       <section class="login-form">
-        <form method="post"  role="login">
-				<h3>   Créer un compte<i class="fa fa-hand-spock-o" aria-hidden="true"></i></h3>
 
-		 <input type="text" name="nom" placeholder="Nom" required class="form-control input-lg" />
-		 <input type="text" name="prenom" placeholder="Prénom" required class="form-control input-lg" />
-		 <input type="email" name="email" placeholder="Email" required class="form-control input-lg" />
-         <input type="identifiant" name="id" placeholder="Identifiant" required class="form-control input-lg" />
-         <input type="password" name="mdp" class="form-control input-lg" id="password" placeholder="Password" required />
+        <form method="POST"  id="loginform" role="login">
+				  <h3>   Créer un compte<i class="fa fa-hand-spock-o" aria-hidden="true"></i></h3>
+	   	   <input type="text" name="nom" id="nom" placeholder="Nom" required class="form-control input-lg" />
+		     <input type="text" name="prenom" id="prenom" placeholder="Prénom" required class="form-control input-lg" />
+		     <input type="email" name="email" id="email" placeholder="Email" required class="form-control input-lg" />
+         <input type="identifiant" name="id" id="identifiant" placeholder="Identifiant" required class="form-control input-lg" />
+         <input type="password" name="mdp" id="mdp" class="form-control input-lg" id="password" placeholder="Password" required />
           <div class="pwstrength_viewport_progress"></div>
        
-          <button type="submit" id="btnpressed" name="go" class="btn btn-lg btn-primary btn-block">Créer</button>
+          <button type="submit" name="go" class="btn btn-lg btn-primary btn-block">Créer</button>
           <div>
-            Déja utilisateur ? <a href="login.html">se connecter</a>
+            Déja utilisateur ? <a href="/login">se connecter</a>
           </div>
           
         </form>
@@ -87,16 +87,12 @@
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
-	<script>
-	$('#btnpressed').on('click',function
-		$.post('/user/create',{
-		name:
-		});
-	})
+  <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
 
 	</script>
-    <script src="js/bootstrap.min.js"></script>    
+  <script src="js/bootstrap.min.js"></script>    
+  <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
+
 	<script src="js/app.js"></script>
 
   </body>
