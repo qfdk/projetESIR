@@ -25,6 +25,6 @@ $('#loginform').submit(function(){
 $('#connectionform').submit(function(){
 		socket.emit('login',{
 			email :$('#email').val(),
-			password :$('#password').val()
+			password :$('#pwd').val()
 		})
 	});

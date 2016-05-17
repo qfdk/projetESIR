@@ -82,6 +82,15 @@ io.sockets.on('connection', function(socket){
  });
      });
 
+
+socket.on('login',function(user){
+	console.log("je suis dans login ");
+});
+
+
+
+
+});
 	// 
 	// 
 
@@ -102,11 +111,7 @@ io.sockets.on('connection', function(socket){
 
 	// });
 
-socket.on('login',function(user){
-	console.log("je suis dans login ");
-});
 
-});
 
 
 // app.get("/user/create", function(req, res) {
