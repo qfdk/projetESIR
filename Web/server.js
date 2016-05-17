@@ -14,73 +14,80 @@ app.set('view engine', 'ejs');
 app.use(require('express').static(path.join(__dirname, './assets')));
 server.listen(3000);
 
-var io=require('socket.io').listen(server);
+var io = require('socket.io').listen(server);
 
-
-var db =  new DB({
-    host     : 'localhost',
-    user     : 'root',
-    password : '',
-    database : 'Projet_esir',
+var db = new DB({
+    host: 'localhost',
+    user: 'root',
+    password: '',
+    database: 'Projet_esir',
     connectionLimit: 50,
     useTransaction: {
-    connectionLimit: 1
+		connectionLimit: 1
     }
 });
+
+
 // -----------------index-----------------
-app.get('/index', function(req, res) {
+app.get('/index', function (req, res) {
     res.render('index');
 });
 
-app.get('/', function(req, res) {
- res.render('index');
+app.get('/', function (req, res) {
+	res.render('index');
 });
-app.get('/login', function(req, res) {
-res.render('login');
+app.get('/login', function (req, res) {
+	res.render('login');
 });
 
-app.get('/stream', function(req, res) {
-res.render('streams');
+app.get('/stream', function (req, res) {
+
+	var urlsDispo = [
+        { name: 'Video 1', link: 'https://www.youtube.com/embed/qEOpts63QWg',description : "Decription de la video 1 ......" },
+        { name: 'DOcker', link: 'https://www.youtube.com/embed/060fY1KxTc',description : "Decription de la video 2 ......" },
+        { name: 'Real', link: 'https://www.youtube.com/embed/XgKOC6X8W28',description : "Decription de la video 3 ......" }
+    ];
+
+	res.render('streams',{urlsDispo});
 });
-   
-app.get('/createaccount', function(req, res) {
+
+app.get('/createaccount', function (req, res) {
 	// res.end
-res.render('createaccount');
-   
+	res.render('createaccount');
+
 });
 
 
+// L'utilisateur va créer un compte
+io.sockets.on('connection', function (socket) {
 
-	 // L'utilisateur va créer un compte
-io.sockets.on('connection', function(socket){
+	socket.on('createnewuser', function (user) {
+		console.log(user);
 
-	socket.on('createnewuser',function(user){
-	console.log(user);
+		db.connect(function (conn) {
+			console.log(conn);
+			conn.query('select * from login_web ', function (err, data) {
+				console.log(data);
 
-    db.connect(function(conn) {
-       console.log(conn);
-       conn.query('select * from login_web ', function(err,data){
-       		console.log(data);
+				var post = {
+					nom: user.firstname,
+					prenom: user.secondname,
+					identifiant: user.identifiant,
+					mdp: user.mdp,
+					email: user.email
+				};
+				conn.query('INSERT INTO login_web SET ?', post, function (error) {
+					if (error) {
+						console.log(error.message);
+					} else {
+						console.log('success');
+					}
+				});
 
-	var post = {
-		nom:user.firstname,
-		prenom:user.secondname,
-		identifiant:user.identifiant,
-		mdp:user.mdp,
-		email:user.email
-		};
-       	conn.query('INSERT INTO login_web SET ?', post, function(error) {
-        if (error) {
-            console.log(error.message);
-        } else {
-            console.log('success');    
-        }
-       });
+			});
 
-    });
-
- });
-     });
+		});
+	});
 
 	// 
 	// 
@@ -92,19 +99,19 @@ io.sockets.on('connection', function(socket){
 	// 	mdp:user.mdp,
 	// 	email:user.email
 	// 	};
- // 		db.query('INSERT INTO login_web VALUES ?', post, function(error) {
- //        if (error) {
- //            console.log(error.message);
- //        } else {
- //            console.log('success');    
- //        }
- //    });
+	// 		db.query('INSERT INTO login_web VALUES ?', post, function(error) {
+	//        if (error) {
+	//            console.log(error.message);
+	//        } else {
+	//            console.log('success');    
+	//        }
+	//    });
 
 	// });
 
-socket.on('login',function(user){
-	console.log("je suis dans login ");
-});
+	socket.on('login', function (user) {
+		console.log("je suis dans login ");
+	});
 
 });
 
@@ -129,6 +136,3 @@ socket.on('login',function(user){
 //         }
 //     });
 // });
-
-
-
