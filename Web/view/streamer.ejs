@@ -16,11 +16,14 @@
 
     <!-- Custom styles for this template -->
     <link href="css/main.css" rel="stylesheet">
-
-  
+	
+	<!-- Player -->
+	<script type="text/javascript" src="jwplayer/jwplayer.js"></script>
+	<script type="text/javascript">jwplayer.key="NEgXd7bodlkWrTd7hwfs/ge0I+O5Xt5rZ/HKmw==";</script>
   </head>
 
-  <body>
+<body>
+
 
     <!-- Fixed navbar -->
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -44,36 +47,33 @@
     </div>
 
 
-
 <div class="container w">
-
     <div class="row centered">
-        <h2>Liens disponibles</h2>
 
-    <% urlsDispo.forEach(function(d) { %> 
-			      <div class="col-lg-4">
-          	<h4><%= d.name %></h4>
-            <iframe width="300" height="200" src="<%= d.link %>" frameborder="0" allowfullscreen></iframe>
-            <form action="streamer" method="post"> 
-                  <input type="hidden" name="stream" value="<%=d.link%>">                
-                  <input type="submit" value="Aller sur le stream">
-            </form>       
-		    		<p><%= d.description %></p>
-	  		   </div>
-
-        <% }); %>
-         
-
-		<br>
-		<br>
-	</div><!-- container -->
-
-	
+	  <div class="col-lg-8">
+		<div id="mediaspace2"></div>
+			<script>
+				jwplayer("mediaspace2").setup({
+				file: "<%=stream%>",	
+				height: 500,
+				width: 700,
+				autostart : true
+				});
+			</script>
+		</div>
+		
+		<div class="col-lg-4" style="background-color:gray">
+		<div id="chat"></div>
+			<h1> Chat Ici </h1>
+		</div>
+</div>
+</div>
+   
 
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
-  </body>
+</body>
 </html>

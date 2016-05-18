@@ -15,8 +15,8 @@ app.set('view engine', 'ejs');
 app.use(require('express').static(path.join(__dirname, './assets')));
 
 //Configuring express to use body-parser as middle-ware.
-app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 server.listen(3000);
 
@@ -51,10 +51,16 @@ app.get('/stream', function (req, res) {
 	var urlsDispo = [
         { name: 'Video 1', link: 'https://www.youtube.com/embed/qEOpts63QWg', description: "Decription de la video 1 ......" },
         { name: 'Docker', link: 'https://www.youtube.com/embed/060fY1KxTc', description: "Decription de la video 2 ......" },
-        { name: 'Real', link: 'https://www.youtube.com/embed/XgKOC6X8W28', description: "Decription de la video 3 ......" }
+        { name: 'Real', link: 'rtmp://rtmp.infomaniak.ch/livecast/yveline1', description: "Decription de la video 3 ......" },
+		{ name: 'Zizou', link: 'https://www.youtube.com/embed/GE5a6Q2NTKU', description: "Decription de la video frnce vs spain ......" }
     ];
 
 	res.render('streams', { urlsDispo });
+});
+
+app.post("/streamer", function (req, res) {
+	console.log(req.body);
+	res.render('streamer', {'stream':req.body.stream});
 });
 
 app.get('/createaccount', function (req, res) {
@@ -95,9 +101,6 @@ io.sockets.on('connection', function (socket) {
 		});
 	});
 
-	app.post("/addLink", function (req, res) {
-		
-	 });
 
 	// 
 	// 
