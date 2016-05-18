@@ -6,17 +6,15 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-    "dependencies": {
-        "node-mysql": "latest",
-        "express": "latest",
-        "url": "latest",
-        "path": "latest",
-		"ejs":"latest",
-		"socket.io":"latest",
-		"socket.io":"latest"
-
-		
-    },
+  "dependencies": {
+    "node-mysql": "latest",
+    "express": "latest",
+    "url": "latest",
+    "path": "latest",
+    "ejs": "latest",
+    "socket.io": "latest",
+    "body-parser": "^1.8.1"
+  },
   "author": "KFCteam",
   "license": "ISC"
 }

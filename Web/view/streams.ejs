@@ -46,58 +46,24 @@
 
 
 <div class="container w">
-      <form id="links" name="links">
-        <input type="text" name="link" value="The link here ........" /><br />
-        <br/>
-        <input type="button" value="Add" onclick="AddLink();" /> 
-    </form>
-    <hr />
-    <div id="lblValues"></div>
 
-         <label for="Selection" class="col-sm-2 form-control-label">Choisir une caméra</label>
-       <div class="col-sm-10">
-       <select id="insightList"  multiple="multiple">
-            <optgroup label="Group 1">
-            <option value="1-1">Option 1.1</option>
-            <option value="2-1">Option 2.1</option>
-            <option value="2-2">Option 2.2</option>
-            <option value="2-3">Option 2.3</option>
-            </optgroup>
-      </select>
-    </div>
-  
-  
-		<div class="row centered">
-			<br><br>
-			<div class="col-lg-4">
-        <iframe width="300" height="200" src="https://www.youtube.com/embed/qFdk-QpSIeU" frameborder="0" allowfullscreen></iframe>
-				<h4>Video 1</h4>
-				<p>Ici description video 1</p>
-				<p><a href="#">@nom_du_streameur</a></p>
-			</div>
+    <div class="row centered">
+        <h2>Liens disponibles</h2>
 
-			<div class="col-lg-4">
-        <iframe width="300" height="200" src="https://www.youtube.com/embed/qFdk-QpSIeU" frameborder="0" allowfullscreen></iframe>
-				<h4>Video 2</h4>
-				<p>Ici description video 2</p>
-				<p><a href="#">@nom_du_streameur</a></p>
-			</div>
-			<div class="col-lg-4">
-        <iframe width="300" height="200" src="https://www.youtube.com/embed/qFdk-QpSIeU" frameborder="0" allowfullscreen></iframe>
-				<h4>Video 3</h4>
-				<p>Ici description video 3</p>
-				<p><a href="#">@nom_du_streameur</a></p>
-			</div>
-		<div class="col-lg-4">
-        <iframe width="300" height="200" src="https://www.youtube.com/embed/qFdk-QpSIeU" frameborder="0" allowfullscreen></iframe>
-				<h4>Video 4</h4>
-				<p>Ici description video  4</p>
-				<p><a href="#">@nom_du_streameur</a></p>
-			</div>
-			
-		</div><!-- row -->
-		<br>
-		<br>
+    <% urlsDispo.forEach(function(d) { %> 
+			      <div class="col-lg-4">
+          	<h4><%= d.name %></h4>
+            <iframe width="300" height="200" src="<%= d.link %>" frameborder="0" allowfullscreen></iframe>
+            <form action="streamer" method="post"> 
+                  <input type="hidden" name="stream" value="<%=d.link%>">                
+                  <input type="submit" value="Aller sur le stream">
+            </form>       
+		    		<p><%= d.description %></p>
+	  		   </div>
+
+        <% }); %>
+         
+
 		<br>
 		<br>
 	</div><!-- container -->
