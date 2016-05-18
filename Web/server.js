@@ -45,9 +45,20 @@ res.render('streams');
    
 app.get('/createaccount', function(req, res) {
 	// res.end
-res.render('createaccount');
+    if (req.session.username) {
+    // User is authenticated, dont let him in
+    res.redirect('/login');
+  } else {
+    // Otherwise we redirect him to createaccount form
+    res.render("createaccount");
+  }
+
    
 });
+
+
+
+
 
 
 
@@ -62,6 +73,8 @@ io.sockets.on('connection', function(socket){
        conn.query('select * from login_web ', function(err,data){
        		console.log(data);
 
+
+
 	var post = {
 		nom:user.firstname,
 		prenom:user.secondname,
@@ -73,7 +86,8 @@ io.sockets.on('connection', function(socket){
         if (error) {
             console.log(error.message);
         } else {
-            console.log('success');    
+            console.log('success');   
+            
         }
        });
 
@@ -84,56 +98,12 @@ io.sockets.on('connection', function(socket){
 
 
 socket.on('login',function(user){
-	console.log("je suis dans login ");
+	console.log("je suis dans login "+user.email+ " : "+user.password);
 });
 
 
 
-
 });
-	// 
-	// 
-
-	// var post = {
-	// 	nom:user.firstname,
-	// 	prenom:user.secondname,
-	// 	identifiant:user.identifiant,
-	// 	mdp:user.mdp,
-	// 	email:user.email
-	// 	};
- // 		db.query('INSERT INTO login_web VALUES ?', post, function(error) {
- //        if (error) {
- //            console.log(error.message);
- //        } else {
- //            console.log('success');    
- //        }
- //    });
-
-	// });
-
-
-
-
-// app.get("/user/create", function(req, res) {
-//     console.log("je suis la ");
-//         var objBD = BD();
-
-//     var post = {
-//      nom: req.body.nom,
-// 		prenom: req.body.prenom,
-// 		identifiant:req.body.id,
-// 		mdp:req.body.mdp,
-// 		email: req.body.email
-//     };
-
-//     objBD.query('INSERT INTO login_web VALUES ?', post, function(error) {
-//         if (error) {
-//             console.log(error.message);
-//         } else {
-//             console.log('success');    
-//         }
-//     });
-// });
-
+	
 
 
