@@ -13,7 +13,8 @@
     "path": "latest",
     "ejs": "latest",
     "socket.io": "latest",
-    "body-parser": "^1.8.1"
+    "body-parser": "^1.8.1",
+    "cookie-session":"2.0.0-alpha.1"
   },
   "author": "KFCteam",
   "license": "ISC"
