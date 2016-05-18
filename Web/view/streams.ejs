@@ -52,15 +52,19 @@
     <div class="row centered">
         <h2>Liens disponibles</h2>
 
-          <% urlsDispo.forEach(function(d) { %> 
+<% urlsDispo.forEach(function(d) { %> 
 			      <div class="col-lg-4">
-          	  <h4><%= d.name %></h4>
-              <iframe width="300" height="200" src="<%= d.link %>" frameborder="0" allowfullscreen></iframe>
-		    		  <p><%= d.description %></p>
+          	<h4><%= d.name %></h4>
+            <iframe width="300" height="200" src="<%= d.link %>" frameborder="0" allowfullscreen></iframe>
+            <form action="/stream" method ="post">
+                  <button name="<%d.link%>" type="submit" value="<%d.link%>"> Aller sur le stream</button>
+            </form>       
+		    		<p><%= d.description %></p>
 	  		   </div>
+
         <% }); %>
          
-         
+
 		<br>
 		<br>
 	</div><!-- container -->

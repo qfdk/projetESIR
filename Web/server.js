@@ -4,14 +4,20 @@ var mysql = require('node-mysql');
 var DB = mysql.DB;
 var url = require('url');
 var app = require('express')();
+var bodyParser = require("body-parser");
 var server = require('http').Server(app);
 var path = require('path');
 
 
 // ------------express-------------------
-app.set('views', path.join(__dirname, '.'));
+app.set('views', path.join(__dirname, 'view/'));
 app.set('view engine', 'ejs');
 app.use(require('express').static(path.join(__dirname, './assets')));
+
+//Configuring express to use body-parser as middle-ware.
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+
 server.listen(3000);
 
 var io = require('socket.io').listen(server);
@@ -43,12 +49,12 @@ app.get('/login', function (req, res) {
 app.get('/stream', function (req, res) {
 
 	var urlsDispo = [
-        { name: 'Video 1', link: 'https://www.youtube.com/embed/qEOpts63QWg',description : "Decription de la video 1 ......" },
-        { name: 'DOcker', link: 'https://www.youtube.com/embed/060fY1KxTc',description : "Decription de la video 2 ......" },
-        { name: 'Real', link: 'https://www.youtube.com/embed/XgKOC6X8W28',description : "Decription de la video 3 ......" }
+        { name: 'Video 1', link: 'https://www.youtube.com/embed/qEOpts63QWg', description: "Decription de la video 1 ......" },
+        { name: 'Docker', link: 'https://www.youtube.com/embed/060fY1KxTc', description: "Decription de la video 2 ......" },
+        { name: 'Real', link: 'https://www.youtube.com/embed/XgKOC6X8W28', description: "Decription de la video 3 ......" }
     ];
 
-	res.render('streams',{urlsDispo});
+	res.render('streams', { urlsDispo });
 });
 
 app.get('/createaccount', function (req, res) {
@@ -88,6 +94,10 @@ io.sockets.on('connection', function (socket) {
 
 		});
 	});
+
+	app.post("/addLink", function (req, res) {
+		
+	 });
 
 	// 
 	// 
