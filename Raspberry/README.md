@@ -48,19 +48,6 @@ gst-launch-1.0 rpicamsrc bitrate=4000000 rotation=90 ! video/x-h264,width=1920,h
 
 ```
 
-## KFC-* avec Nginx-rtmp-module bash en lnmp
-
-
-https://github.com/arut/nginx-rtmp-module
-
-
-```bash
-
-cd /root
-git clone https://github.com/arut/nginx-rtmp-module.git
-lnmp 1.3直接修改lnmp.conf ，Nginx_Modules_Options='' 单引号中加上--add-module=/root/nginx-rtmp-module
-./upgrade_niginx.sh
-```
 
 ## License Apache 2
 World is powered by solitude
