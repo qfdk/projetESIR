@@ -1,25 +1,27 @@
-# Rasperry Pi avec Sony HDR-AS30v 
+## Rasperry Pi live streaming
+
 [![BuildStatus](https://travis-ci.org/qfdk/projetESIR.svg?branch=master)](https://travis-ci.org/qfdk/projetESIR)
 [![Platform](https://img.shields.io/badge/platform-Linux,%20Raspberry-green.svg?style=flat)](https://qfdk.me) 
 [![License](https://img.shields.io/badge/license-New%20BSD-yellow.svg?style=flat)](LICENSE)
-## Etapes
 
-modifier `/etc/apt/sources.list`
-add -> `deb http://vontaene.de/raspbian-updates/ . main`
+## Intoduction
 
-1. Connecter le cam à un Respberry Pi [mode USB ?| mode Wi-Fi]
-2. Installer `sudo apt-get -y gstreamer1.0` en Raspberry pour eviter le delai d'image. 
-3. EXP [https://obsproject.com ](https://obsproject.com)
-4. `gstreamr` + `raspivid`
-5. `sudo apt-get -y gstreamer1.0` && Commande magic `raspivid -n -t 0 -rot 270 -w 960 -h 720 -fps 30 -b 6000000 -o - | gst-launch-1.0 -e -vvvv fdsrc ! h264parse ! rtph264pay pt=96 config-interval=5 ! udpsink host=home.qfdk.me port=5000`
-6. todo...
+Dans le cadre de notre formation d'ingénieur, nous avons la possibilité de réaliser un projet en deuxième année. Les enseignants Johann Bourcier et Olivier Barais nous ont proposé trois projets et notre choix s'est porté sur "Utiliser un ensemble de Raspberry Pi pour assembler, enregistrer, encoder et diffuser un ensemble de flux vidéos enregistrés via des caméras". Ce projet a été l'occasion de rassembler une équipe de 10 élèves ingénieurs et d'expérimenter les enseignements appris tout au long de notre formation (notamment en ce qui concerne l'agilité mais également sur les technologies que nous avons apprises).
+
+## Les différentes parties
+
+- [Rasberry (Caméra)](https://github.com/qfdk/projetESIR/tree/master/Raspberry
+)
+
+- [Linux (SmartPush system + kfc-* + kfc-nginx)](https://github.com/qfdk/projetESIR/tree/master/Linux)
+ 
+- [Web (Client + player)](https://github.com/qfdk/projetESIR/tree/master/Web)
 
 ## Todo
 
-- KFC
-- Macdonald
+- Réunion à KFC(Markdonalds)
+- PPT ?
 
-
-## License New BSD
+## License Apache 2
 World is powered by solitude
 ![img-source-from-https://github.com/docker/dockercraft](https://github.com/docker/dockercraft/raw/master/docs/img/contribute.png?raw=true)
