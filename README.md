@@ -6,7 +6,14 @@
 
 ## Introduction
 
-Dans le cadre de notre formation d'ingénieur, nous avons la possibilité de réaliser un projet en deuxième année. Les enseignants Johann Bourcier et Olivier Barais nous ont proposé trois projets et notre choix s'est porté sur "Utiliser un ensemble de Raspberry Pi pour assembler, enregistrer, encoder et diffuser un ensemble de flux vidéos enregistrés via des caméras". Ce projet a été l'occasion de rassembler une équipe de 10 élèves ingénieurs et d'expérimenter les enseignements appris tout au long de notre formation (notamment en ce qui concerne l'agilité mais également sur les technologies que nous avons apprises).
+Dans le cadre de notre formation d'ingénieur, nous avons eu l'opportunité de réaliser un projet en deuxième année. Les enseignants Johann Bourcier et Olivier Barais nous ont proposé trois projets et notre choix s'est porté sur "Utiliser un ensemble de Raspberry Pi pour assembler, enregistrer, encoder et diffuser un ensemble de flux vidéos enregistrés via des caméras". Ce projet a été l'occasion de rassembler une équipe de 10 élèves ingénieurs et d'expérimenter les enseignements appris tout au long de notre formation (notamment en ce qui concerne l'agilité mais également sur les technologies que nous avons apprises).
+
+## Portée du projet
+
+Comme dit précédemment, nous utilisons un ensemble de Raspberry Pi dans le but de réaliser du streaming vidéo via des PiCaméra. L'idée est d'utiliser un équipement à faible coût pour permettre de suivre des cours à distance ou de permettre de la surveillance de salles. Pour faire fonctionner ce projet il vous faut:
+- Un Raspberry Pi
+- Une PiCamera
+- Des machines virtuelles permettant la redirection
 
 ## Les différentes parties
 
