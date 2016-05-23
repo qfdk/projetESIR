@@ -93,10 +93,12 @@ app.get('/about', function (req, res) {
 });
 
 app.get('/logout', function (req, res) {
+	console.log("Deconnexion");
 	req.session.userName = null;
 	req.session.isConnected = false;
     res.redirect('/');
 });
+
 
 app.get('/createaccount', function (req, res) {
 	// res.end
