@@ -32,9 +32,11 @@ body {
     margin: 0; 
     padding: 0; 
     text-align: justify;
-    border-style: dotted;
+    border: 1px solid #D2D2D2;
+    border-radius: 5px;
     overflow-y: scroll; 
-    height:400px;
+    /* TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO */
+    height:330px; 
 }
         
 #messages li { 
