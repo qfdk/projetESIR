@@ -5,6 +5,8 @@ var DB = mysql.DB;
 var url = require('url');
 var app = require('express')();
 var bodyParser = require("body-parser");
+var expressSession = require('express-session');
+var cookieParser = require('cookie-parser'); // the session is stored in a cookie
 var server = require('http').Server(app);
 var path = require('path');
 var md5 = require('md5');
@@ -14,18 +16,19 @@ app.set('views', path.join(__dirname, 'view/'));
 app.set('view engine', 'ejs');
 app.use(require('express').static(path.join(__dirname, './assets')));
 
-//Configuring express to use body-parser as middle-ware.
+// -------------- Configuring express to use body-parser ----------
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+//app.use(bodyParser());
+app.use(cookieParser());
+app.use(expressSession({ secret: 'somesecrettokenhere' }));
 
 server.listen(3000);
-
-var io = require('socket.io').listen(server);
 
 var db = new DB({
     host: 'localhost',
     user: 'root',
-    password: '',
+    password: 'maiga',
     database: 'Projet_esir',
     connectionLimit: 50,
     useTransaction: {
@@ -36,6 +39,8 @@ var db = new DB({
 
 // -----------------index-----------------
 app.get('/index', function (req, res) {
+	if (req.session.isConnected)
+		console.log("Status ==> " + req.session.isConnected);
     res.render('index');
 });
 
@@ -68,19 +73,18 @@ app.get('/createaccount', function (req, res) {
 
 });
 
-
 app.post('/login', function (req, res) {
 	var user = req.body.identifiant;
 	var pass = md5(req.body.pwd);
 
 	db.connect(function (conn) {
-		//console.log(conn);
 		var requeteSql = 'SELECT * FROM login_web Where identifiant = ? and mdp = ?';
 		conn.query(requeteSql, [user, pass], function (err, data) {
-			
 
-			if (data[0]!=undefined) {
+
+			if (data[0] != undefined) {
 				console.log("Bien connecté ....");
+  				req.session.isConnected = true;
 				res.redirect('stream');
 			}
 			else {
@@ -89,36 +93,30 @@ app.post('/login', function (req, res) {
 			}
 		});
 	});
-
-
 });
 
-// L'utilisateur va créer un compte
-
-
+// ----------------- Creation d'un compte -----------------
 app.post('/createaccount', function (req, res) {
 
-		db.connect(function (conn) {
+	db.connect(function (conn) {
 
-				var post = {
-					nom: req.body.nom,
-					prenom: req.body.prenom,
-					identifiant: req.body.identifiant,
-					mdp: md5(req.body.mdp),
-					email: req.body.email
-				};
-				conn.query('INSERT INTO login_web SET ?', post, function (error) {
-					if (error) {
-						console.log(error);
-						res.render('createaccount', { 'erreur': "Creation du compte impossible" });
-					} else {
-						console.log("Compte créer avec succés ....");
-						res.redirect('login');
-					}
-				});
-
-			});
-
+		var post = {
+			nom: req.body.nom,
+			prenom: req.body.prenom,
+			identifiant: req.body.identifiant,
+			mdp: md5(req.body.mdp),
+			email: req.body.email
+		};
+		conn.query('INSERT INTO login_web SET ?', post, function (error) {
+			if (error) {
+				console.log(error);
+				res.render('createaccount', { 'erreur': "Creation du compte impossible" });
+			} else {
+				console.log("Compte créer avec succés ....");
+				res.redirect('login');
+			}
 		});
 
+	});
 
+});
