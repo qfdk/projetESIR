@@ -4,7 +4,7 @@
 [![Platform](https://img.shields.io/badge/platform-Linux,%20Raspberry-green.svg?style=flat)](https://qfdk.me) 
 [![License](https://img.shields.io/badge/license-New%20BSD-yellow.svg?style=flat)](LICENSE)
 
-## Intoduction
+## Introduction
 
 Dans le cadre de notre formation d'ingénieur, nous avons la possibilité de réaliser un projet en deuxième année. Les enseignants Johann Bourcier et Olivier Barais nous ont proposé trois projets et notre choix s'est porté sur "Utiliser un ensemble de Raspberry Pi pour assembler, enregistrer, encoder et diffuser un ensemble de flux vidéos enregistrés via des caméras". Ce projet a été l'occasion de rassembler une équipe de 10 élèves ingénieurs et d'expérimenter les enseignements appris tout au long de notre formation (notamment en ce qui concerne l'agilité mais également sur les technologies que nous avons apprises).
 
