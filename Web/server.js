@@ -38,8 +38,6 @@ var db = new DB({
 
 // -----------------index-----------------
 app.get('/index', function (req, res) {
-	if (req.session.isConnected)
-		console.log("Status ==> " + req.session.isConnected);
     res.render('index');
 });
 
@@ -48,7 +46,6 @@ app.get('/', function (req, res) {
 });
 app.get('/login', function (req, res) {
 	if (req.session.isConnected) {
-		console.log("Status ==> " + req.session.isConnected);
 		res.redirect('stream');
 	}
 	else {
@@ -58,7 +55,6 @@ app.get('/login', function (req, res) {
 
 app.get('/stream', function (req, res) {
 	if (req.session.isConnected) {
-		console.log("Status ==> " + req.session.isConnected);
 
 		var urlsDispo = [
 			{ name: 'Video 1', link: 'https://www.youtube.com/embed/qEOpts63QWg', description: "Decription de la video 1 ......" },
@@ -76,7 +72,6 @@ app.get('/stream', function (req, res) {
 
 app.post("/streamer", function (req, res) {
 	if (req.session.isConnected) {
-		console.log("Status ==> " + req.session.isConnected);
 
 		res.render('streamer', { 'stream': req.body.stream });
 	} else {
@@ -93,7 +88,6 @@ app.get('/createaccount', function (req, res) {
 app.post('/login', function (req, res) {
 
 	if (req.session.isConnected) {
-		console.log("Status ==> " + req.session.isConnected);
 		res.redirect('stream');
 	}
 	else {
@@ -109,10 +103,10 @@ app.post('/login', function (req, res) {
 				if (data[0] != undefined) {
 					console.log("Bien connecté ....");
 					req.session.isConnected = true;
+					req.session.userName = user;
 					res.redirect('stream');
 				}
 				else {
-					console.log("Identifiants incorrects ....");
 					res.render('login', { 'erreur': "Email ou mot de passe incorrect" });
 				}
 			});
@@ -123,26 +117,29 @@ app.post('/login', function (req, res) {
 // ----------------- Creation d'un compte -----------------
 app.post('/createaccount', function (req, res) {
 
+	if (req.session.isConnected) {
+		res.redirect('stream');
 
-	db.connect(function (conn) {
+	} else {
 
-		var post = {
-			nom: req.body.nom,
-			prenom: req.body.prenom,
-			identifiant: req.body.identifiant,
-			mdp: md5(req.body.mdp),
-			email: req.body.email
-		};
-		conn.query('INSERT INTO login_web SET ?', post, function (error) {
-			if (error) {
-				console.log(error);
-				res.render('createaccount', { 'erreur': "Creation du compte impossible" });
-			} else {
-				console.log("Compte créer avec succés ....");
-				res.redirect('login');
-			}
+		db.connect(function (conn) {
+			var post = {
+				nom: req.body.nom,
+				prenom: req.body.prenom,
+				identifiant: req.body.identifiant,
+				mdp: md5(req.body.mdp),
+				email: req.body.email
+			};
+			conn.query('INSERT INTO login_web SET ?', post, function (error) {
+				if (error) {
+					console.log(error);
+					res.render('createaccount', { 'erreur': "Creation du compte impossible" });
+				} else {
+					console.log("Compte créer avec succés ....");
+					res.redirect('login');
+				}
+			});
+
 		});
-
-	});
-
+	}
 });
