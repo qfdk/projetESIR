@@ -41,11 +41,12 @@ var db = new DB({
 
 // -----------------index-----------------
 app.get('/index', function (req, res) {
-    res.render('index');
+	var user = req.session.userName;
+    res.render('index', { "userName": user });
 });
 
 app.get('/', function (req, res) {
-	res.render('index');
+	res.redirect('index');
 });
 app.get('/login', function (req, res) {
 	if (req.session.isConnected) {
