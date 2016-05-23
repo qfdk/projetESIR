@@ -9,6 +9,7 @@ var cookieParser = require('cookie-parser'); // the session is stored in a cooki
 var server = require('http').Server(app);
 var path = require('path');
 var md5 = require('md5');
+var io = require('socket.io')(server);
 
 // ------------express-------------------
 app.set('views', path.join(__dirname, 'view/'));
@@ -27,7 +28,7 @@ server.listen(3000);
 var db = new DB({
     host: 'localhost',
     user: 'root',
-    password: 'maiga',
+    password: '',
     database: 'Projet_esir',
     connectionLimit: 50,
     useTransaction: {
@@ -136,13 +137,23 @@ app.post('/createaccount', function (req, res) {
 		conn.query('INSERT INTO login_web SET ?', post, function (error) {
 			if (error) {
 				console.log(error);
-				res.render('createaccount', { 'erreur': "Creation du compte impossible" });
+				res.render('createaccount', { 'erreur': "Création du compte impossible" });
 			} else {
-				console.log("Compte créer avec succés ....");
+				console.log("Compte créé avec succés ....");
 				res.redirect('login');
 			}
 		});
 
 	});
 
+});
+
+// ----------------- Chatbox Streamer -----------------
+var pseudo = 0;
+
+io.on('connection', function(socket){
+  socket.pseudo = "name" + pseudo++;
+  socket.on('chat message', function(msg){
+    io.emit('chat message', "[" + new Date().toTimeString().replace(/.*(\d{2}:\d{2}:\d{2}).*/, "$1") + "] " + socket.pseudo + " : " + msg);
+  });
 });

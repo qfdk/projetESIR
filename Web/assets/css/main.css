@@ -26,6 +26,32 @@ body {
     margin-top: 70px;
 }
 
+    /* Chatbox */
+#messages {
+    list-style-type: none; 
+    margin: 0; 
+    padding: 0; 
+    text-align: justify;
+    border-style: dotted;
+    overflow-y: scroll; 
+    height:400px;
+}
+        
+#messages li { 
+    padding: 5px 10px; 
+}
+#messages li:nth-child(odd) { 
+    background: #eee;
+}
+
+#chatbox { 
+    background: #000; 
+    padding: 3px; 
+    position: fixed; 
+    bottom: 0; 
+}
+/* end chatbox */
+
 /* Titles */
 h1, h2, h3, h4, h5, h6 {
     font-family: "Raleway";

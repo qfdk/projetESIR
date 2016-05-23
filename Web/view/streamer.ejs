@@ -1,79 +1,120 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <link rel="shortcut icon" href="ico/favicon.png">
 
-    <title>Live Stream Interface</title>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <link rel="shortcut icon" href="ico/favicon.png">
 
-    <!-- Bootstrap core CSS -->
-    <link href="css/bootstrap.css" rel="stylesheet">
-    <link href="css/font-awesome.min.css" rel="stylesheet">
+  <title>Live Stream Interface</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font: 13px Helvetica, Arial;
+    }
+    
+    form input {
+      border: 0;
+      width: 80%;
+    }
+    
+    form button {
+      width: 20%;
+      background: rgb(130, 224, 255);
+      border: none;
+    }
+  </style>
+  <!-- Bootstrap core CSS -->
+  <link href="css/bootstrap.css" rel="stylesheet">
+  <link href="css/font-awesome.min.css" rel="stylesheet">
 
-    <!-- Custom styles for this template -->
-    <link href="css/main.css" rel="stylesheet">
-	
-	<!-- Player -->
-	<script type="text/javascript" src="jwplayer/jwplayer.js"></script>
-	<script type="text/javascript">jwplayer.key="NEgXd7bodlkWrTd7hwfs/ge0I+O5Xt5rZ/HKmw==";</script>
-  </head>
+  <!-- Custom styles for this template -->
+  <link href="css/main.css" rel="stylesheet">
+
+  <!-- Player -->
+  <script type="text/javascript" src="jwplayer/jwplayer.js"></script>
+  <script type="text/javascript">
+    jwplayer.key="NEgXd7bodlkWrTd7hwfs/ge0I+O5Xt5rZ/HKmw==";
+  </script>
+</head>
 
 <body>
 
 
-    <!-- Fixed navbar -->
-    <div class="navbar navbar-inverse navbar-fixed-top">
-      <div class="container">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="/index">Live Stream ESIR <i class="fa fa-circle"></i></a>
-        </div>
-        <div class="navbar-collapse collapse">
-          <ul class="nav navbar-nav navbar-right">
-            <li><a href="/index">HOME</a></li>
-            <li class="active"><a href="/stream">STREAM</a></li>
-            <li><a href="/login">LOGIN <i class="fa fa-user"></i></a></li>
-          </ul>
-        </div><!--/.nav-collapse -->
+  <!-- Fixed navbar -->
+  <div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+        <a class="navbar-brand" href="/index">Live Stream ESIR <i class="fa fa-circle"></i></a>
       </div>
+      <div class="navbar-collapse collapse">
+        <ul class="nav navbar-nav navbar-right">
+          <li><a href="/index">HOME</a></li>
+          <li class="active"><a href="/stream">STREAM</a></li>
+          <li><a href="/login">LOGIN <i class="fa fa-user"></i></a></li>
+        </ul>
+      </div>
+      <!--/.nav-collapse -->
     </div>
+  </div>
 
 
-<div class="container w">
+  <div class="container w">
     <div class="row centered">
 
-	  <div class="col-lg-8">
-		<div id="mediaspace2"></div>
-			<script>
-				jwplayer("mediaspace2").setup({
-				file: "<%=stream%>",	
-				height: 500,
-				width: 700,
-				autostart : true
-				});
-			</script>
-		</div>
-		
-		<div class="col-lg-4" style="background-color:gray">
-		<div id="chat"></div>
-			<h1> Chat Ici </h1>
-		</div>
-</div>
-</div>
-   
+      <div class="col-md-7">
+        <div id="mediaspace2"></div>
+        <script>
+          jwplayer("mediaspace2").setup({
+            file: "<%=stream%>",	
+            width: "100%",
+            aspectratio: "16:9",
+            autostart : true
+            });
+        </script>
+      </div>
 
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
+      <div class="col-md-5">
+
+        <ul id="messages"></ul>
+        <form action="" id="chatbox">
+          <input id="m" autocomplete="off" /><button>Envoyer</button>
+        </form>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap core JavaScript
+        ================================================== -->
+  <!-- Placed at the end of the document so the pages load faster -->
+  <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+  <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+  <script>
+    var socket = io();
+          $('form').submit(function(){
+            socket.emit('chat message', $('#m').val());
+            $('#m').val('');
+            return false;
+          });
+          socket.on('chat message', function(msg){
+            $('#messages').append($('<li>').text(msg));
+          });
+  </script>
+  <script src="js/bootstrap.min.js"></script>
 </body>
+
 </html>
