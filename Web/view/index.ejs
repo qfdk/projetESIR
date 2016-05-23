@@ -45,7 +45,11 @@
             <li><a href="/stream">STREAM</a></li>
             <li><a href="/about">ABOUT</a></li>
             <li><a href="/team">TEAM</a></li>
+              <% if(userName){%>
+              <li><a href="/logout">LOGOUT<i class='fa fa-user'></a><%=userName%> </li>
+             <% }else{%>
             <li><a id="loginDiv" href="/login">LOGIN <i class="fa fa-user"></i></a></li>
+            <% }%>
           </ul>
         </div><!--/.nav-collapse -->
       </div>
@@ -66,8 +70,7 @@
 	</div><!-- headerwrap -->
 
 
-
-
+  
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
