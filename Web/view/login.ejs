@@ -52,15 +52,20 @@
 <div class="container">
   
   <div class="row" id="pwd-container">
-    <div class="col-md-4"></div>
-    
     <div class="col-md-4">
-      <section class="login-form">
-        <form method="post" id="connectionform" action="/" role="login">
-				<h3>   Login To STREAM <i class="fa fa-video-camera" aria-hidden="true"></i></h3>
 
-		  <input type="email" name="email" placeholder="Email" id="email"  class="form-control input-lg" required/>
-      <input type="password" name="pwd" placeholder="Password" id="password" class="form-control input-lg"   required />
+         
+    </div>
+   
+    <div class="col-md-4">
+         <section class="login-form">
+        <form method="post" id="connectionform" action="#" role="login">
+				<H2 style="color:#FF0000"> <%=erreur%> </h2>
+        <h3>   Login To STREAM <i class="fa fa-video-camera" aria-hidden="true"></i></h3>
+
+		  <input type="email" name="email" placeholder="Email" required class="form-control input-lg" />
+      <input type="password" name="pwd" class="form-control input-lg" id="password" placeholder="Password" required/>
+
         
           <div class="pwstrength_viewport_progress"></div>
           
