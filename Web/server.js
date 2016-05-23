@@ -30,7 +30,7 @@ server.listen(3000, function(){
 var db = new DB({
     host: 'localhost',
     user: 'root',
-    password: '',
+    password: 'maiga',
     database: 'Projet_esir',
     connectionLimit: 50,
     useTransaction: {
@@ -80,6 +80,10 @@ app.post("/streamer", function (req, res) {
 	} else {
 		res.render('login', { 'erreur': '' });
 	}
+});
+
+app.get("/streamer",function(req,res){
+	res.redirect('stream');
 });
 
 app.get('/team', function (req, res) {
