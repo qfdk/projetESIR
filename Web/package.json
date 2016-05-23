@@ -14,7 +14,7 @@
     "ejs": "latest",
     "socket.io": "latest",
     "body-parser": "^1.8.1",
-    "cookie-session":"2.0.0-alpha.1"
+    "md5":"latest"
   },
   "author": "KFCteam",
   "license": "ISC"

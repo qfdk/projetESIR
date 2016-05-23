@@ -7,7 +7,7 @@ var app = require('express')();
 var bodyParser = require("body-parser");
 var server = require('http').Server(app);
 var path = require('path');
-var cookieSession = require('cookie-session')
+var md5 = require('md5');
 
 // ------------express-------------------
 app.set('views', path.join(__dirname, 'view/'));
@@ -25,7 +25,7 @@ var io = require('socket.io').listen(server);
 var db = new DB({
     host: 'localhost',
     user: 'root',
-    password: 'maiga',
+    password: '',
     database: 'Projet_esir',
     connectionLimit: 50,
     useTransaction: {
@@ -64,18 +64,18 @@ app.post("/streamer", function (req, res) {
 
 app.get('/createaccount', function (req, res) {
 	// res.end
-	res.render('createaccount');
+	res.render('createaccount', { 'erreur': '' });
 
 });
 
 
 app.post('/login', function (req, res) {
-	var user = req.body.email;
-	var pass = req.body.pwd;
+	var user = req.body.identifiant;
+	var pass = md5(req.body.pwd);
 
 	db.connect(function (conn) {
-		console.log(conn);
-		var requeteSql = 'SELECT * FROM login_web Where email = ? and mdp = ?';
+		//console.log(conn);
+		var requeteSql = 'SELECT * FROM login_web Where identifiant = ? and mdp = ?';
 		conn.query(requeteSql, [user, pass], function (err, data) {
 			
 
@@ -94,82 +94,31 @@ app.post('/login', function (req, res) {
 });
 
 // L'utilisateur va créer un compte
-io.sockets.on('connection', function (socket) {
 
-	socket.on('createnewuser', function (user) {
-		console.log(user);
+
+app.post('/createaccount', function (req, res) {
 
 		db.connect(function (conn) {
-			console.log(conn);
-			conn.query('select * from login_web ', function (err, data) {
-				console.log(data);
 
 				var post = {
-					nom: user.firstname,
-					prenom: user.secondname,
-					identifiant: user.identifiant,
-					mdp: user.mdp,
-					email: user.email
+					nom: req.body.nom,
+					prenom: req.body.prenom,
+					identifiant: req.body.identifiant,
+					mdp: md5(req.body.mdp),
+					email: req.body.email
 				};
 				conn.query('INSERT INTO login_web SET ?', post, function (error) {
 					if (error) {
-						console.log(error.message);
+						console.log(error);
+						res.render('createaccount', { 'erreur': "Creation du compte impossible" });
 					} else {
-						console.log('success');
+						console.log("Compte créer avec succés ....");
+						res.redirect('login');
 					}
 				});
 
 			});
 
 		});
-	});
 
 
-	// 
-	// 
-
-	// var post = {
-	// 	nom:user.firstname,
-	// 	prenom:user.secondname,
-	// 	identifiant:user.identifiant,
-	// 	mdp:user.mdp,
-	// 	email:user.email
-	// 	};
-	// 		db.query('INSERT INTO login_web VALUES ?', post, function(error) {
-	//        if (error) {
-	//            console.log(error.message);
-	//        } else {
-	//            console.log('success');    
-	//        }
-	//    });
-
-	// });
-
-	// socket.on('login', function (user) {
-	// 	console.log("je suis dans login ");
-	// });
-
-});
-
-
-
-// app.get("/user/create", function(req, res) {
-//     console.log("je suis la ");
-//         var objBD = BD();
-
-//     var post = {
-//      nom: req.body.nom,
-// 		prenom: req.body.prenom,
-// 		identifiant:req.body.id,
-// 		mdp:req.body.mdp,
-// 		email: req.body.email
-//     };
-
-//     objBD.query('INSERT INTO login_web VALUES ?', post, function(error) {
-//         if (error) {
-//             console.log(error.message);
-//         } else {
-//             console.log('success');    
-//         }
-//     });
-// });
