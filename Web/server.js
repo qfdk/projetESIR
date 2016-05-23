@@ -30,7 +30,7 @@ server.listen(3000, function(){
 var db = new DB({
     host: 'localhost',
     user: 'root',
-    password: '',
+    password: 'maiga',
     database: 'Projet_esir',
     connectionLimit: 50,
     useTransaction: {
@@ -81,6 +81,22 @@ app.post("/streamer", function (req, res) {
 	} else {
 		res.render('login', { 'erreur': '' });
 	}
+});
+
+app.get('/team', function (req, res) {
+	var user = req.session.userName;
+    res.render('team', { "userName": user });
+});
+
+app.get('/about', function (req, res) {
+	var user = req.session.userName;
+    res.render('about', { "userName": user });
+});
+
+app.get('/logout', function (req, res) {
+	req.session.userName = null;
+	req.session.isConnected = false;
+    res.redirect('/');
 });
 
 app.get('/createaccount', function (req, res) {
