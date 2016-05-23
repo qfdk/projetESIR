@@ -38,7 +38,6 @@ var db = new DB({
     }
 });
 
-
 // -----------------index-----------------
 app.get('/index', function (req, res) {
 	var user = req.session.userName;
