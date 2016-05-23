@@ -7,7 +7,6 @@ var app = express();
 
 // must use cookieParser before expressSession
 app.use(cookieParser());
-
 app.use(expressSession({secret:'somesecrettokenhere'}));
 
 app.use(bodyParser());

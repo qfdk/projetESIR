@@ -1,4 +1,3 @@
-
 // ---------------Environnement-----------------
 var mysql = require('node-mysql');
 var DB = mysql.DB;
@@ -48,23 +47,41 @@ app.get('/', function (req, res) {
 	res.render('index');
 });
 app.get('/login', function (req, res) {
-	res.render('login', { 'erreur': '' });
+	if (req.session.isConnected) {
+		console.log("Status ==> " + req.session.isConnected);
+		res.redirect('stream');
+	}
+	else {
+		res.render('login', { 'erreur': '' });
+	}
 });
 
 app.get('/stream', function (req, res) {
+	if (req.session.isConnected) {
+		console.log("Status ==> " + req.session.isConnected);
 
-	var urlsDispo = [
-        { name: 'Video 1', link: 'https://www.youtube.com/embed/qEOpts63QWg', description: "Decription de la video 1 ......" },
-        { name: 'Docker', link: 'https://www.youtube.com/embed/060fY1KxTc', description: "Decription de la video 2 ......" },
-        { name: 'Real', link: 'rtmp://rtmp.infomaniak.ch/livecast/yveline1', description: "Decription de la video 3 ......" },
-		{ name: 'Zizou', link: '//www.youtube.com/watch?v=GE5a6Q2NTKU', description: "Decription de la video frnce vs spain ......" }
-    ];
+		var urlsDispo = [
+			{ name: 'Video 1', link: 'https://www.youtube.com/embed/qEOpts63QWg', description: "Decription de la video 1 ......" },
+			{ name: 'Docker', link: 'https://www.youtube.com/embed/060fY1KxTc', description: "Decription de la video 2 ......" },
+			{ name: 'Real', link: 'rtmp://rtmp.infomaniak.ch/livecast/yveline1', description: "Decription de la video 3 ......" },
+			{ name: 'Zizou', link: '//www.youtube.com/watch?v=GE5a6Q2NTKU', description: "Decription de la video frnce vs spain ......" }
+		];
 
-	res.render('streams', { urlsDispo });
+		res.render('streams', { urlsDispo });
+	}
+	else {
+		res.render('login', { 'erreur': 'Connectez vous d\'abord ...' });
+	}
 });
 
 app.post("/streamer", function (req, res) {
-	res.render('streamer', { 'stream': req.body.stream });
+	if (req.session.isConnected) {
+		console.log("Status ==> " + req.session.isConnected);
+
+		res.render('streamer', { 'stream': req.body.stream });
+	} else {
+		res.render('login', { 'erreur': '' });
+	}
 });
 
 app.get('/createaccount', function (req, res) {
@@ -74,25 +91,33 @@ app.get('/createaccount', function (req, res) {
 });
 
 app.post('/login', function (req, res) {
-	var user = req.body.identifiant;
-	var pass = md5(req.body.pwd);
 
-	db.connect(function (conn) {
-		var requeteSql = 'SELECT * FROM login_web Where identifiant = ? and mdp = ?';
-		conn.query(requeteSql, [user, pass], function (err, data) {
+	if (req.session.isConnected) {
+		console.log("Status ==> " + req.session.isConnected);
+		res.redirect('stream');
+	}
+	else {
+
+		var user = req.body.identifiant;
+		var pass = md5(req.body.pwd);
+
+		db.connect(function (conn) {
+			var requeteSql = 'SELECT * FROM login_web Where identifiant = ? and mdp = ?';
+			conn.query(requeteSql, [user, pass], function (err, data) {
 
 
-			if (data[0] != undefined) {
-				console.log("Bien connecté ....");
-  				req.session.isConnected = true;
-				res.redirect('stream');
-			}
-			else {
-				console.log("Identifiants incorrects ....");
-				res.render('login', { 'erreur': "Email ou mot de passe incorrect" });
-			}
+				if (data[0] != undefined) {
+					console.log("Bien connecté ....");
+					req.session.isConnected = true;
+					res.redirect('stream');
+				}
+				else {
+					console.log("Identifiants incorrects ....");
+					res.render('login', { 'erreur': "Email ou mot de passe incorrect" });
+				}
+			});
 		});
-	});
+	}
 });
 
 // ----------------- Creation d'un compte -----------------
