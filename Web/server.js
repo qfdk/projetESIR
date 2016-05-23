@@ -66,7 +66,7 @@ app.get('/stream', function (req, res) {
 			{ name: 'Zizou', link: '//www.youtube.com/watch?v=GE5a6Q2NTKU', description: "Decription de la video frnce vs spain ......" }
 		];
 
-		res.render('streams', { urlsDispo });
+		res.render('streams', {urlsDispo,"userName":req.session.userName});
 	}
 	else {
 		res.render('login', { 'erreur': 'Connectez vous d\'abord ...' });
@@ -76,7 +76,7 @@ app.get('/stream', function (req, res) {
 app.post("/streamer", function (req, res) {
 	if (req.session.isConnected) {
 
-		res.render('streamer', { 'stream': req.body.stream });
+		res.render('streamer', { 'stream': req.body.stream,'userName':req.session.userName });
 	} else {
 		res.render('login', { 'erreur': '' });
 	}
