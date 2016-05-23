@@ -30,7 +30,7 @@ server.listen(3000, function(){
 var db = new DB({
     host: 'localhost',
     user: 'root',
-    password: 'maiga',
+    password: '',
     database: 'Projet_esir',
     connectionLimit: 50,
     useTransaction: {
@@ -170,7 +170,6 @@ app.post('/createaccount', function (req, res) {
 
 // ----------------- Chatbox Streamer -----------------
 var pseudo = 0;
-
 io.on('connection', function(socket){
   socket.pseudo = "name" + pseudo++;
   socket.on('chat message', function(msg){
