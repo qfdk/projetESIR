@@ -110,9 +110,9 @@ app.post('/createaccount', function (req, res) {
 				conn.query('INSERT INTO login_web SET ?', post, function (error) {
 					if (error) {
 						console.log(error);
-						res.render('createaccount', { 'erreur': "Creation du compte impossible" });
+						res.render('createaccount', {'erreur': "Creation du compte impossible, vérifiez les données inseré" });
 					} else {
-						console.log("Compte créer avec succés ....");
+						console.log("Compte créé avec succés.");
 						res.redirect('login');
 					}
 				});
