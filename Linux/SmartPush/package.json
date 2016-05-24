@@ -1,6 +1,6 @@
 {
   "name": "SmartPush",
-  "version": "1.0.0",
+  "version": "0.0.0",
   "private": true,
   "scripts": {
     "start": "node ./bin/www"
@@ -11,7 +11,9 @@
     "debug": "~2.2.0",
     "ejs": "~2.3.3",
     "express": "~4.13.1",
+    "md5": "^2.1.0",
     "morgan": "~1.6.1",
+    "node-mysql": "^0.4.2",
     "serve-favicon": "~2.3.0"
   }
 }
