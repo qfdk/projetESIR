@@ -59,7 +59,7 @@
     <% urlsDispo.forEach(function(d) { %> 
 			      <div class="col-lg-4">
           	<h4><%= d.name %></h4>
-            <iframe width="300" height="200" src="<%= d.link %>" frameborder="0" allowfullscreen></iframe>
+            <iframe width="300" height="200" src="<%= d.link %>" frameborder="1" allowfullscreen></iframe>
             <form action="streamer" method="post"> 
                   <input type="hidden" name="stream" value="<%=d.link%>">                
                   <input type="submit" value="Aller sur le stream">

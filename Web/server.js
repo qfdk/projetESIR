@@ -30,7 +30,7 @@ server.listen(3000, function(){
 var db = new DB({
     host: 'localhost',
     user: 'root',
-    password: '',
+    password: 'maiga',
     database: 'Projet_esir',
     connectionLimit: 50,
     useTransaction: {
@@ -60,9 +60,9 @@ app.get('/stream', function (req, res) {
 	if (req.session.isConnected) {
 
 		var urlsDispo = [
-			{ name: 'Video 1', link: 'https://www.youtube.com/embed/qEOpts63QWg', description: "Decription de la video 1 ......" },
-			{ name: 'Docker', link: 'https://www.youtube.com/embed/060fY1KxTc', description: "Decription de la video 2 ......" },
-			{ name: 'Real', link: 'rtmp://rtmp.infomaniak.ch/livecast/yveline1', description: "Decription de la video 3 ......" },
+			{ name: 'TEX X', link: 'https://youtu.be/8S0FDjFBj8o', description: "Avoir l'air intelligent en faisant une presentation ......" },
+			{ name: 'Steve Job', link: 'https://www.youtube.com/embed/UF8uR6Z6KLc', description: "Steve Jobs Stanford Commencement Address ..." },
+			{ name: 'Yveline', link: 'rtmp://rtmp.infomaniak.ch/livecast/yveline1', description: "Decription de la video 3 ......" },
 			{ name: 'Zizou', link: '//www.youtube.com/watch?v=GE5a6Q2NTKU', description: "Decription de la video frnce vs spain ......" }
 		];
 
