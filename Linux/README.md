@@ -53,14 +53,80 @@ http.createServer(function (req, res) {
 }).listen(8080);
 ```
 
-## Todo
+## SmartPush (Controler côté kfc-harpie)
 
-* Node.js - SmartPushRtmp(Blancing en push)
-	- express
-	- fluent-ffmpeg
-	- leveDB (noSql/MySql)
+Un service intelligent qui permet de balancer entre les diffuseurs et les machines de traitements en utilisant `Node.js`.
+
+Il a une jolie interface graphique en utilisant `Bootstrap 3`
+
+* Ajouter/ Supprimer dynamiquement les machines de traitements
+* Ban utilisateur
+* API utile => format json
+
+
+## API
+
+Example url: http://kfc-harpie:8080/api/{metode}
+
+- listVm
+- list
+- info
+
+
+* listVm
+
+```json
+[
+  "rtmp:\/\/kfc-streaming.istic.univ-rennes1.fr\/live",
+  "rtmp:\/\/kfc-sisilafamille.istic.univ-rennes1.fr\/live",
+  "rtmp:\/\/kfc-raspi.istic.univ-rennes1.fr\/live"
+]
+```
+
+* list
+
+```json
+// cas invalide
+[
+  {
+    "user": "salifou",
+    "url": "Votre compte n'est pas valid\u00e9 !",
+    "is_locked": 1
+  }
+]
+// cas valide
+[
+  {
+    "user": "salifou",
+    "url": "rtmp:\/\/kfc-streaming.istic.univ-rennes1.fr\/live\/salifou",
+    "is_locked": 0
+  }
+]
+
+```
+
+* info?user=xx
+
+```json
+[
+  {
+    "identifiant": "salifou",
+    "is_locked": 0,
+    "nom": "sasalifou",
+    "prenom": "salifou",
+    "email": ""
+  }
+]
+
+```
+
+## GUI pour KFC-Harpie
+
+![](./img/1.png)
+
+
 	
-* forever start app.js
+### forever start app.js
 
 ```bash
 $ sudo npm install forever -g   #安装
@@ -68,3 +134,7 @@ $ forever start app.js          #start/启动
 $ forever stop app.js           #stop/关闭
 ```
 
+## License Apache 2
+World is powered by solitude
+Je suis fort :)
+![img-source-from-https://github.com/docker/dockercraft](https://github.com/docker/dockercraft/raw/master/docs/img/contribute.png?raw=true)

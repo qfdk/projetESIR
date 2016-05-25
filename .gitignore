@@ -2,4 +2,7 @@ Web/node_modules/*
 
 Web/.DS_Store
 
+Linux/SmartPush/.DS_Store
 Linux/SmartPush/.idea/*
+Linux/SmartPush/typings/*
+Linux/SmartPush/node_modules/*

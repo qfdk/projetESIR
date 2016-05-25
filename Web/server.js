@@ -105,8 +105,13 @@ app.get('/logout', function (req, res) {
 
 app.get('/createaccount', function (req, res) {
 	// res.end
-	res.render('createaccount', { 'erreur': '' });
+	
+	if (req.session.isConnected) {
+		res.redirect('stream');
+	} else {
 
+	res.render('createaccount', { 'erreur': '' });
+}
 });
 
 app.post('/login', function (req, res) {
@@ -141,10 +146,6 @@ app.post('/login', function (req, res) {
 // ----------------- Creation d'un compte -----------------
 app.post('/createaccount', function (req, res) {
 
-	if (req.session.isConnected) {
-		res.redirect('stream');
-	} else {
-
 		db.connect(function (conn) {
 			var post = {
 				nom: req.body.nom,
@@ -164,7 +165,7 @@ app.post('/createaccount', function (req, res) {
 			});
 
 		});
-	}
+	
 });
 
 // ----------------- Chatbox Streamer -----------------
