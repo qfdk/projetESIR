@@ -86,7 +86,6 @@ app.get('/stream', function (req, res) {
 
 app.post("/streamer", function (req, res) {
 	if (req.session.isConnected) {
-
 		res.render('streamer', { 'stream': req.body.stream,'userName':req.session.userName });
 	} else {
 		res.render('login', { 'erreur': '' });
@@ -117,8 +116,13 @@ app.get('/logout', function (req, res) {
 
 app.get('/createaccount', function (req, res) {
 	// res.end
-	res.render('createaccount', { 'erreur': '' });
+	
+	if (req.session.isConnected) {
+		res.redirect('stream');
+	} else {
 
+	res.render('createaccount', { 'erreur': '' });
+}
 });
 
 app.post('/login', function (req, res) {
@@ -153,10 +157,6 @@ app.post('/login', function (req, res) {
 // ----------------- Creation d'un compte -----------------
 app.post('/createaccount', function (req, res) {
 
-	if (req.session.isConnected) {
-		res.redirect('stream');
-	} else {
-
 		db.connect(function (conn) {
 			var post = {
 				nom: req.body.nom,
@@ -176,14 +176,14 @@ app.post('/createaccount', function (req, res) {
 			});
 
 		});
-	}
+	
 });
 
 // ----------------- Chatbox Streamer -----------------
-var pseudo = 0;
 io.on('connection', function(socket){
-  socket.pseudo = "name" + pseudo++;
-  socket.on('chat message', function(msg){
-    io.emit('chat message', "[" + new Date().toTimeString().replace(/.*(\d{2}:\d{2}:\d{2}).*/, "$1") + "] " + socket.pseudo + " : " + msg);
+	socket.color = "#" + ((1<<24) * Math.random()|0).toString(16); // Random color chat
+	
+  socket.on('chat-message', function(msg, pseudo, stream){
+    io.emit('chat-message', pseudo, socket.color, msg, stream);
   });
 });

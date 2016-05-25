@@ -92,12 +92,15 @@
     <script>
       var socket = io();
           $('form').submit(function(){
-            socket.emit('chat message', $('#m').val());
+            socket.emit('chat-message', $('#m').val(), '<%=userName%>', '<%=stream%>');
             $('#m').val('');
             return false;
           });
-          socket.on('chat message', function(msg){
-            $('#messages').append($('<li>').text(msg));
+          socket.on('chat-message', function(pseudo, color, msg, stream){
+            if (stream == '<%=stream%>') // Si le message nous est pas destiné, on l'affiche pas
+               $('#messages').append($('<li>[' + new Date().toTimeString().replace(/([\d]+:[\d]{2})(:[\d]{2})(.*)/, "$1")
+               + '] <span style="color:' + color +'">' + pseudo + "</span> : " 
+               + msg + '</li>'));
           });
     </script>
     <script src="js/bootstrap.min.js"></script>

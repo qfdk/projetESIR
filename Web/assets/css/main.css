@@ -31,7 +31,7 @@ body {
     list-style-type: none; 
     margin: 0; 
     padding: 0; 
-    text-align: justify;
+    text-align: left;
     border: 1px solid #D2D2D2;
     border-radius: 5px;
     overflow-y: scroll; 
