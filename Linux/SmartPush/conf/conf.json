@@ -1,0 +1,18 @@
+{
+  "db": {
+    "host": "localhost",
+    "user": "root",
+    "password": "tu ne vois pas:X",
+    "database": "korpu",
+    "connectionLimit": 50,
+    "useTransaction": {
+      "connectionLimit": 1
+    }
+  },
+  "vm": [
+    "rtmp://kfc-streaming.istic.univ-rennes1.fr/live",
+    "rtmp://kfc-sisilafamille.istic.univ-rennes1.fr/live",
+    "rtmp://kfc-raspi.istic.univ-rennes1.fr/live"
+  ],
+  "base_url":"rtmp://kfc-harpie.istic.univ-rennes1.fr/live",
+}
