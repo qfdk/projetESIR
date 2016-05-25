@@ -66,9 +66,9 @@
                 <td><%= users[i].url %></td>
                 <td>
                     <% if(users[i].is_locked==0){%>
-                    <button data-user="<%= users[i].user %>" onclick="ban(this)" class="btn btn-danger">Ban</button>
+                    <a href="/banUser?user=<%= users[i].user %>" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span>&nbsp;&nbsp;Ban</a>
                     <% }else {%>
-                    <a href="/activUser?user=<%= users[i].user %>" class="btn btn-success">Active</a>
+                    <a href="/activUser?user=<%= users[i].user %>" class="btn btn-success"><span class="glyphicon glyphicon-ok"></span>&nbsp;&nbsp;Active</a>
                     <%}%>
                 </td>
             </tr>
@@ -90,16 +90,16 @@
                 }
             });
         }
-        function ban(data) {
-            var user = data.getAttribute('data-user');
-            $.get('/banUser?user=' + user, function (err, data) {
-                if (data == 'success') {
-                    $('#user-' + user).remove();
-                    $('#userSpan').html($('#userSpan').html()-1);
-                    console.log('remove ok');
-                }
-            });
-        }
+//        function ban(data) {
+//            var user = data.getAttribute('data-user');
+//            $.get('/banUser?user=' + user, function (err, data) {
+//                if (data == 'success') {
+////                    $('#user-' + user).remove();
+////                    $('#userSpan').html($('#userSpan').html()-1);
+//                    console.log('remove ok');
+//                }
+//            });
+//        }
 
     </script>
 <% include foot.ejs %>
