@@ -132,7 +132,11 @@ router.get('/api/info', function (req, res, next) {
         var requeteSql = 'select identifiant,is_locked,nom,prenom,email from login_web where identifiant = ?';
         conn.query(requeteSql, [params['user']], function (err, data) {
             if (data[0] != undefined) {
-                res.json(data);
+                var tmp={};
+                tmp['info']=data[0];
+                tmp['push_url']=conf.base_url;
+                tmp['key']=params['user']+'?user='+params['user']+'&passwd=xxx';
+                res.json(tmp);
             }
             else {
                 console.log("Identifiants incorrects ....");
@@ -141,6 +145,7 @@ router.get('/api/info', function (req, res, next) {
         });
     });
 });
+
 
 
 function push_stream(src, user) {
