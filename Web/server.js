@@ -9,6 +9,7 @@ var cookieParser = require('cookie-parser'); // the session is stored in a cooki
 var server = require('http').Server(app);
 var path = require('path');
 var md5 = require('md5');
+var escape = require("html-escape");
 var io = require('socket.io')(server);
 
 // ------------express-------------------
@@ -173,6 +174,8 @@ io.on('connection', function(socket){
 	socket.color = "#" + ((1<<24) * Math.random()|0).toString(16); // Random color chat
 	
   socket.on('chat-message', function(msg, pseudo, stream){
-    io.emit('chat-message', pseudo, socket.color, msg, stream);
+	  if (msg != "")
+    	io.emit('chat-message', pseudo, socket.color, escape(msg), stream);
   });
 });
+
