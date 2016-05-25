@@ -59,7 +59,7 @@
     <% json.forEach(function(d) { %> 
 			      <div class="col-lg-4">
           	<h4><%= d.user %></h4>
-            <iframe width="300" height="200" src="<%= d.url %>" frameborder="1" allowfullscreen></iframe>
+            <iframe width="300" height="200" src="" frameborder="1" allowfullscreen></iframe>
             <form action="streamer" method="post"> 
                   <input type="hidden" name="stream" value="<%=d.url%>">                
                   <input type="submit" value="Aller sur le stream">

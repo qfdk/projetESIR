@@ -37,7 +37,7 @@ server.listen(3000, function(){
 var db = new DB({
     host: 'localhost',
     user: 'root',
-    password: 'maiga',
+    password: 'coucousalifou',
     database: 'Projet_esir',
     connectionLimit: 50,
     useTransaction: {
@@ -70,6 +70,8 @@ app.get('/stream', function (req, res) {
 		client.get("http://kfc-harpie:8080/api/list", function (data, response) {
 			json = data;
 			json.push({user: 'Yveline', url: 'rtmp://rtmp.infomaniak.ch/livecast/yveline1'});
+			json.push({user: 'Best moment decima', url: 'https://www.youtube.com/watch?v=krqdIHzrRBc'});
+
 		
 		/*var urlsDispo = [
 			{ name: 'Test 1', link: 'rtmp://kfc-sisilafamille.istic.univ-rennes1.fr/live/salifou', description: "Video test 1 kfc-raspi" },
