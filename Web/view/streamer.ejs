@@ -87,13 +87,14 @@
     <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
     <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
     <script>
-      var socket = io();
+      alert(<%=userName%> + " " + <%=stream%>)
+      var socket = io(<%=userName%>, <%=stream%>);
           $('form').submit(function(){
-            socket.emit('chat message', $('#m').val());
+            socket.emit('chat-message', $('#m').val());
             $('#m').val('');
             return false;
           });
-          socket.on('chat message', function(msg){
+          socket.on('chat-message', function(msg){
             $('#messages').append($('<li>').text(msg));
           });
     </script>

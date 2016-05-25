@@ -75,7 +75,6 @@ app.get('/stream', function (req, res) {
 
 app.post("/streamer", function (req, res) {
 	if (req.session.isConnected) {
-
 		res.render('streamer', { 'stream': req.body.stream,'userName':req.session.userName });
 	} else {
 		res.render('login', { 'erreur': '' });
@@ -170,9 +169,12 @@ app.post('/createaccount', function (req, res) {
 
 // ----------------- Chatbox Streamer -----------------
 var pseudo = 0;
-io.on('connection', function(socket){
-  socket.pseudo = "name" + pseudo++;
+io.on('connection', function(socket, pseudo, stream){
+  socket.pseudo = pseudo;
+  socket.stream = stream;
+  
   socket.on('chat message', function(msg){
+	  console.log(pseudo + " - " + stream);
     io.emit('chat message', "[" + new Date().toTimeString().replace(/.*(\d{2}:\d{2}:\d{2}).*/, "$1") + "] " + socket.pseudo + " : " + msg);
   });
 });
