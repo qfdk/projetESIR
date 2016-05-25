@@ -98,7 +98,7 @@ Example url: http://kfc-harpie:8080/api/{metode}
 [
   {
     "user": "salifou",
-    "url": "rtmp:\/\/kfc-streaming.istic.univ-rennes1.fr\/live\/salifou",
+    "url": "rtmp://kfc-streaming.istic.univ-rennes1.fr/live/salifou",
     "is_locked": 0
   }
 ]
@@ -108,17 +108,30 @@ Example url: http://kfc-harpie:8080/api/{metode}
 * info?user=xx
 
 ```json
-[
-  {
-    "identifiant": "salifou",
+{
+  "info": {
+    "identifiant": "salifou1",
     "is_locked": 0,
-    "nom": "sasalifou",
-    "prenom": "salifou",
-    "email": ""
-  }
-]
-
+    "nom": "ben",
+    "prenom": "ben",
+    "email": "ben@maiga.fr"
+  },
+  // il ne change pas!!
+  "push_url": "rtmp://kfc-harpie.istic.univ-rennes1.fr/live",
+  // le client va remplir dans son outil.
+  "key": "salifou1?user=salifou1&passwd=xxx"
+}
 ```
+
+## Example avec OBS
+
+  
+-  "push_url": "rtmp://kfc-harpie.istic.univ-rennes1.fr/live",
+
+-  "key": "salifou1?user=salifou1&passwd=example"
+
+
+![](./img/2.png)
 
 ## GUI pour KFC-Harpie
 
@@ -130,8 +143,8 @@ Example url: http://kfc-harpie:8080/api/{metode}
 
 ```bash
 $ sudo npm install forever -g   #安装
-$ forever start app.js          #start/启动
-$ forever stop app.js           #stop/关闭
+$ forever start bin/www          #start/启动
+$ forever stop bin/www           #stop/关闭
 ```
 
 ## License Apache 2
