@@ -2,9 +2,11 @@ var express = require('express');
 var url = require('url');
 var md5 = require('md5');
 var conf = require('../conf/conf.json');
-var mysql = require('node-mysql');
-var DB = mysql.DB;
-var db = new DB(conf.db);
+
+var mysql = require('mysql');
+//il faut utiliser un pool
+var pool = mysql.createPool(conf.db);
+
 var exec = require('child_process').exec;
 
 // info_users_list vm(traitement des donnees)
@@ -27,7 +29,7 @@ router.get('/play', function (req, res, next) {
     var params = url.parse(req.url, true).query;
     var user = params['user'];
     var pass = md5(params['passwd']);
-    db.connect(function (conn) {
+    pool.getConnection(function (err,conn) {
         //console.log(conn);
         var requeteSql = 'select * from login_web where identifiant = ? and mdp = ?';
         conn.query(requeteSql, [user, pass], function (err, data) {
@@ -55,6 +57,7 @@ router.get('/play', function (req, res, next) {
                 res.end('falid')
             }
         });
+        conn.release();
     });
 });
 
@@ -81,7 +84,7 @@ router.get('/banUser', function (req, res, next) {
     var index = users.indexOf(user);
     info_users_list.splice(index, 1);
     users.splice(index, 1);
-    db.connect(function (conn) {
+    pool.getConnection(function (err,conn) {
         var requeteSql = 'update login_web set is_locked=1 where identifiant = ?';
         conn.query(requeteSql, [user], function (err, data) {
             var tmp = {};
@@ -92,6 +95,7 @@ router.get('/banUser', function (req, res, next) {
             users.push(user);
             res.redirect('/');
         });
+        conn.release();
     });
 
 });
@@ -103,13 +107,14 @@ router.get('/activUser', function (req, res, next) {
     var index = users.indexOf(user);
     info_users_list.splice(index, 1);
     users.splice(index, 1);
-    db.connect(function (conn) {
+    pool.getConnection(function (err,conn) {
         var requeteSql = 'update login_web set is_locked=0 where identifiant = ?';
         conn.query(requeteSql, [user], function (err, data) {
             var url = conf.base_url + 'live/' + user;
             push_stream(url, user);
             res.redirect('/');
         });
+        conn.release();
     });
 });
 
@@ -128,7 +133,7 @@ router.get('/api/list', function (req, res, next) {
 // /api/info?user=xxx
 router.get('/api/info', function (req, res, next) {
     var params = url.parse(req.url, true).query;
-    db.connect(function (conn) {
+    pool.getConnection(function (err,conn) {
         var requeteSql = 'select identifiant,is_locked,nom,prenom,email from login_web where identifiant = ?';
         conn.query(requeteSql, [params['user']], function (err, data) {
             if (data[0] != undefined) {
@@ -142,11 +147,10 @@ router.get('/api/info', function (req, res, next) {
                 console.log("Identifiants incorrects ....");
                 res.end('falid')
             }
+            conn.release();
         });
     });
 });
-
-
 
 function push_stream(src, user) {
     var json = {};
@@ -176,16 +180,16 @@ function calcNbUserActive() {
     return cpt;
 }
 
-function Map() {
-}
-Map.prototype.get = function (key) {
-    return this[key];
-};
-Map.prototype.set = function (key, val) {
-    this[key] = val;
-};
-Map.prototype.del = function (key) {
-    delete this[key];
-};
+// function Map() {
+// }
+// Map.prototype.get = function (key) {
+//     return this[key];
+// };
+// Map.prototype.set = function (key, val) {
+//     this[key] = val;
+// };
+// Map.prototype.del = function (key) {
+//     delete this[key];
+// };
 
 module.exports = router;
