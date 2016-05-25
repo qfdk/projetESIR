@@ -7,24 +7,20 @@ var DB = mysql.DB;
 var db = new DB(conf.db);
 var exec = require('child_process').exec;
 
-// list vm(traitement des donnees)
+// info_users_list vm(traitement des donnees)
 var vm = conf.vm;
-// users list dans with list
+// users info_users_list (user name)
 var users = [];
 
-// list de info user
-var list=[];
-
-var banlist=[];
-
-var map=new Map();
+// info_users_list de info user(detail)
+var info_users_list=[];
 
 var router = express.Router();
 
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
-    res.render('index', {title: 'SmartPush', users: list,vms:vm});
+    res.render('index', {title: 'SmartPush', users: info_users_list,vms:vm});
 });
 
 router.get('/play', function (req,res,next) {
@@ -38,19 +34,20 @@ router.get('/play', function (req,res,next) {
             if (data[0] != undefined) {
                 console.log("Bien connecté ....");
                 res.writeHead(200, {'Content-Type': 'text/json'});
-                if (users.indexOf(user)===-1&&data[0].is_locked!==1)
+                if (users.indexOf(user)===-1&&data[0].is_locked===0)
                 {
                     var url=conf.base_url+'live/'+user;
                     //push video
                     push_stream(url,user);
                 }
-                if(data[0].is_locked===1)
+                if(users.indexOf(user)===-1&&data[0].is_locked===1)
                 {
                     var tmp={};
                     tmp['user']=user;
                     tmp['url']="Votre compte n'est pas validé !";
                     tmp['is_locked']=1;
-                    list.push(tmp);
+                    users.push(user);
+                    info_users_list.push(tmp);
                 }
                 res.end('ok');
             }
@@ -83,23 +80,32 @@ router.get('/removeVm', function (req, res, next) {
 router.get('/banUser',function (req,res,next) {
     var params = url.parse(req.url, true).query;
     var user=params['user'];
+    console.log(user);
     var index=users.indexOf(user);
-    list.splice(index,1);
+    info_users_list.splice(index,1);
     users.splice(index,1);
     db.connect(function (conn) {
         var requeteSql = 'update login_web set is_locked=1 where identifiant = ?';
         conn.query(requeteSql, [user], function (err, data) {
+            var tmp={};
+            tmp['user']=user;
+            tmp['url']="Votre compte n'est pas validé !";
+            tmp['is_locked']=1;
+            info_users_list.push(tmp);
+            users.push(user);
             res.redirect('/');
         });
     });
+
 });
 
 router.get('/activUser',function (req,res,next) {
     var params = url.parse(req.url, true).query;
     var user=params['user'];
-    var index = indexBan(user);
-    console.log(index);
-    list.splice(index,1);
+
+    var index = users.indexOf(user);
+    info_users_list.splice(index,1);
+    users.splice(index, 1);
     db.connect(function (conn) {
         var requeteSql = 'update login_web set is_locked=0 where identifiant = ?';
         conn.query(requeteSql, [user], function (err, data) {
@@ -110,13 +116,16 @@ router.get('/activUser',function (req,res,next) {
     });
 });
 
+router.get('/api/test',function (req,res,next) {
+   res.end('ok');
+});
 // /api/listVm
 router.get('/api/listVm', function (req, res, next) {
     res.json(vm);
 });
-// /api/list
+// /api/info_users_list
 router.get('/api/list',function (req,res,next) {
-    res.json(list);
+    res.json(info_users_list);
 });
 
 // /api/info?user=xxx
@@ -136,31 +145,32 @@ router.get('/api/info', function (req, res, next) {
     });
 });
 
-// les algos
-function indexBan(user) {
-    for(var i=0;i<list.length;i ++)
-    {
-        if (list[i].user===user)
-        {
-            return i;
-        }
-    }
-}
 
 function push_stream(src,user)
 {
-    // listUser.push(user);
-    var data={};
-    data['user']=user;
+    var json={};
+    json['user']=user;
     users.push(user);
-    for (var i = 0; i < users.length; i++) {
-        var url=vm[users.length % vm.length-1]+'/'+user;
+
+        var url=vm[(calcNbUserActive())% vm.length]+'/'+user;
+        console.log((calcNbUserActive()) % vm.length);
         var command = 'ffmpeg -i ' + src + ' -c:v copy -c:a copy -f flv ' +url;
-        data['url']=url;
-        data['is_locked']=0;
-        list.push(data);
+        json['url']=url;
+        json['is_locked']=0;
+        info_users_list.push(json);
         exec(command, function(a,b,c){if(a!==null){console.log('commande ok');}});
+}
+
+function calcNbUserActive() {
+    var cpt=0;
+    for(var i=0; i<info_users_list.length; i ++)
+    {
+        if (info_users_list[i].is_locked===0)
+        {
+            cpt++;
+        }
     }
+    return cpt;
 }
 
 function Map(){}
