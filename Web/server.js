@@ -66,9 +66,10 @@ app.get('/login', function (req, res) {
 app.get('/stream', function (req, res) {
 	if (req.session.isConnected) {
 		
-		var json;
+		var json = [];
 		client.get("http://kfc-harpie:8080/api/list", function (data, response) {
 			json = data;
+			json.push({user: 'Yveline', url: 'rtmp://rtmp.infomaniak.ch/livecast/yveline1'});
 		
 		/*var urlsDispo = [
 			{ name: 'Test 1', link: 'rtmp://kfc-sisilafamille.istic.univ-rennes1.fr/live/salifou', description: "Video test 1 kfc-raspi" },
