@@ -54,5 +54,6 @@ app.use(function(req, res, next) {
 //   });
 // });
 
-
+// var http= require('http');
+// http.createServer(app).listen(3000);
 module.exports = app;
