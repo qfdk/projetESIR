@@ -69,16 +69,16 @@ app.get('/stream', function (req, res) {
 		var json;
 		client.get("http://kfc-harpie:8080/api/list", function (data, response) {
 			json = data;
-		});
-
-		var urlsDispo = [
+		
+		/*var urlsDispo = [
 			{ name: 'Test 1', link: 'rtmp://kfc-sisilafamille.istic.univ-rennes1.fr/live/salifou', description: "Video test 1 kfc-raspi" },
 			{ name: 'Steve Job', link: 'https://www.youtube.com/embed/UF8uR6Z6KLc', description: "Steve Jobs Stanford Commencement Address ..." },
 			{ name: 'Yveline', link: 'rtmp://rtmp.infomaniak.ch/livecast/yveline1', description: "Decription de la video 3 ......" },
 			{ name: 'Zizou', link: '//www.youtube.com/watch?v=GE5a6Q2NTKU', description: "Decription de la video frnce vs spain ......" }
 		];
-
-		res.render('streams', {urlsDispo,"userName":req.session.userName});
+		*/
+		res.render('streams', {json,"userName":req.session.userName});
+		});
 	}
 	else {
 		res.render('login', { 'erreur': 'Connectez vous d\'abord ...' });
