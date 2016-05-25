@@ -11,6 +11,12 @@ var path = require('path');
 var md5 = require('md5');
 var io = require('socket.io')(server);
 
+
+// ------------ Appel REST   -------------
+var Client = require('node-rest-client').Client;
+var client = new Client();
+
+
 // ------------express-------------------
 app.set('views', path.join(__dirname, 'view/'));
 app.set('view engine', 'ejs');
@@ -58,9 +64,14 @@ app.get('/login', function (req, res) {
 
 app.get('/stream', function (req, res) {
 	if (req.session.isConnected) {
+		
+		var json;
+		client.get("http://kfc-harpie:8080/api/list", function (data, response) {
+			json = data;
+		});
 
 		var urlsDispo = [
-			{ name: 'TEX X', link: 'https://youtu.be/8S0FDjFBj8o', description: "Avoir l'air intelligent en faisant une presentation ......" },
+			{ name: 'Test 1', link: 'rtmp://kfc-sisilafamille.istic.univ-rennes1.fr/live/salifou', description: "Video test 1 kfc-raspi" },
 			{ name: 'Steve Job', link: 'https://www.youtube.com/embed/UF8uR6Z6KLc', description: "Steve Jobs Stanford Commencement Address ..." },
 			{ name: 'Yveline', link: 'rtmp://rtmp.infomaniak.ch/livecast/yveline1', description: "Decription de la video 3 ......" },
 			{ name: 'Zizou', link: '//www.youtube.com/watch?v=GE5a6Q2NTKU', description: "Decription de la video frnce vs spain ......" }
