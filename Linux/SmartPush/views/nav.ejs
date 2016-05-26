@@ -12,7 +12,9 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
             <form class="navbar-form navbar-right">
-                <!--<button type="submit" class="btn btn-success">Login</button>-->
+                <% if (login==true){%>
+                <a class="btn btn-success" href="/logout">Logout</a>
+                <% }%>
             </form>
         </div><!--/.navbar-collapse -->
     </div>
