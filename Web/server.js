@@ -35,17 +35,6 @@ server.listen(3000, function(){
   console.log('listening on *:3000');
 });
 
-var db = new DB({
-    host: 'localhost',
-    user: 'projet',
-    password: '',
-    database: 'projet',
-    connectionLimit: 50,
-    useTransaction: {
-		connectionLimit: 1
-    }
-});
-
 // -----------------index-----------------
 app.get('/index', function (req, res) {
 	var user = req.session.userName;
@@ -139,8 +128,7 @@ app.post('/login', function (req, res) {
 
 		var user = req.body.identifiant;
 		var pass = md5(req.body.pwd);
-
-		db.connect(function (conn) {
+		pool.getConnection(function (err, conn) {
 			var requeteSql = 'SELECT * FROM login_web Where identifiant = ? and mdp = ?';
 			conn.query(requeteSql, [user, pass], function (err, data) {
 
@@ -155,6 +143,7 @@ app.post('/login', function (req, res) {
 					res.render('login', { 'erreur': "Email ou mot de passe incorrect" });
 				}
 			});
+		conn.release();
 		});
 	}
 });
@@ -162,7 +151,7 @@ app.post('/login', function (req, res) {
 // ----------------- Creation d'un compte -----------------
 app.post('/createaccount', function (req, res) {
 
-		db.connect(function (conn) {
+		pool.getConnection(function (err, conn) {
 			var post = {
 				nom: req.body.nom,
 				prenom: req.body.prenom,
@@ -179,6 +168,8 @@ app.post('/createaccount', function (req, res) {
 					res.redirect('login');
 				}
 			});
+			
+			conn.release();
 
 		});
 	
@@ -191,6 +182,10 @@ io.on('connection', function(socket){
   socket.on('chat-message', function(msg, pseudo, stream){
 	  if (msg != "")
     	io.emit('chat-message', escape(pseudo), socket.color, escape(msg), escape(stream));
+  });
+  
+  socket.on('disconnect', function() {
+      console.log('Got disconnect!');
   });
 });
 
