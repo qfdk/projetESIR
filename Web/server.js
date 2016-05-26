@@ -92,6 +92,17 @@ app.get("/streamer", function (req, res) {
 
 app.get('/startlive', function (req, res) {
 	if (req.session.isConnected) {
+		// =============================================================== TODO LI ICI ! ==========================================================
+	var user = req.session.userName;
+    res.render('startlive', { "userName": user });
+	}
+	else
+		res.render('login', { 'erreur': 'Hâte de partager vos meilleurs moments ? Connectez-vous !' });
+});
+
+app.post('/startlive', function (req, res) {
+	if (req.session.isConnected) {
+		// =============================================================== TODO LI ICI ! ==========================================================
 	var user = req.session.userName;
     res.render('startlive', { "userName": user });
 	}

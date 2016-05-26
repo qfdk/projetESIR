@@ -97,10 +97,12 @@
             return false;
           });
           socket.on('chat-message', function(pseudo, color, msg, stream){
-            if (stream == '<%=stream%>') // Si le message nous est pas destiné, on l'affiche pas
+            if (stream == '<%=stream%>'){ // Si le message nous est pas destiné, on l'affiche pas
                $('#messages').append($('<li>[' + new Date().toTimeString().replace(/([\d]+:[\d]{2})(:[\d]{2})(.*)/, "$1")
                + '] <span style="color:' + color +'">' + pseudo + "</span> : " 
                + msg + '</li>'));
+               $("#messages").animate({ scrollTop: $("#messages").height() }, 300);
+            }
           });
     </script>
     <script src="js/bootstrap.min.js"></script>
