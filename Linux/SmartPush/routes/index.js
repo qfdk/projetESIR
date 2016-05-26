@@ -20,15 +20,19 @@ var router = express.Router();
 /**
  * redirect
  */
-router.get('/', function (req, res, next) {
-    res.render('login', {login: false});
+ router.get('/', function (req, res, next) {
+    if (req.session.isConnected) {
+        res.render('index', {title: 'SmartPush', users: info_users_list, vms: vm, login: true});
+    } else {
+        res.render('login', {login: false});
+    }
 });
 
 /**
  * index 
  * login [required]
  */
-router.get('/index', function (req, res, next) {
+ router.get('/index', function (req, res, next) {
     if (req.session.isConnected) {
         res.render('index', {title: 'SmartPush', users: info_users_list, vms: vm, login: true});
     } else {
@@ -39,7 +43,7 @@ router.get('/index', function (req, res, next) {
 /**
  * check login
  */
-router.get('/login', function (req, res, next) {
+ router.get('/login', function (req, res, next) {
     if (req.session.isConnected) {
         res.redirect('index');
     }
@@ -47,7 +51,7 @@ router.get('/login', function (req, res, next) {
         res.render('login', {login: false});
     }
 });
-router.post('/login', function (req, res) {
+ router.post('/login', function (req, res) {
     if (req.session.isConnected) {
         res.redirect('index');
     }
@@ -67,7 +71,7 @@ router.post('/login', function (req, res) {
 /**
  * logout
  */
-router.get('/logout', function (req, res, next) {
+ router.get('/logout', function (req, res, next) {
     if (req.session.isConnected) {
         req.session.destroy();
     }
@@ -78,7 +82,7 @@ router.get('/logout', function (req, res, next) {
  * api time
  * 
  */
-router.get('/api', function (req, res, next) {
+ router.get('/api', function (req, res, next) {
     var tmp = {};
     tmp['status'] = "ok";
     tmp['msg'] = "SmartPush API";
@@ -88,19 +92,19 @@ router.get('/api', function (req, res, next) {
 /** 
  * list de machine
  */ 
-router.get('/api/listVm', function (req, res, next) {
+ router.get('/api/listVm', function (req, res, next) {
     res.json(vm);
 });
 /**
  * streaming users
  */
-router.get('/api/list', function (req, res, next) {
+ router.get('/api/list', function (req, res, next) {
     res.json(info_users_list);
 });
 /**
  * information client
  */
-router.get('/api/info', function (req, res, next) {
+ router.get('/api/info', function (req, res, next) {
     var params = url.parse(req.url, true).query;
     pool.getConnection(function (err, conn) {
         var requeteSql = 'select identifiant,is_locked,nom,prenom,email from login_web where identifiant = ?';
@@ -128,7 +132,7 @@ router.get('/api/info', function (req, res, next) {
  * user=xxx
  * passwd=sss
  */
-router.get('/play', function (req, res, next) {
+ router.get('/play', function (req, res, next) {
     var params = url.parse(req.url, true).query;
     var user = params['user'];
     var pass = md5(params['passwd']);
@@ -165,7 +169,7 @@ router.get('/play', function (req, res, next) {
 /**
  * add une machine de traitement
  */
-router.get('/addVm', function (req, res, next) {
+ router.get('/addVm', function (req, res, next) {
     if (req.session.isConnected) {
         var params = url.parse(req.url, true).query;
         if (params['url'] !== "") {
@@ -179,7 +183,7 @@ router.get('/addVm', function (req, res, next) {
 /**
  * supprimer une machine de traitement
  */
-router.get('/removeVm', function (req, res, next) {
+ router.get('/removeVm', function (req, res, next) {
     if (req.session.isConnected) {
         var params = url.parse(req.url, true).query;
         var index = params['id'];
@@ -191,34 +195,34 @@ router.get('/removeVm', function (req, res, next) {
     }
 
 });
-router.get('/banUser', function (req, res, next) {
+ router.get('/banUser', function (req, res, next) {
     if (req.session.isConnected) {
-    var params = url.parse(req.url, true).query;
-    var user = params['user'];
-    console.log(user);
-    var index = users.indexOf(user);
-    info_users_list.splice(index, 1);
-    users.splice(index, 1);
-    pool.getConnection(function (err, conn) {
-        var requeteSql = 'update login_web set is_locked=1 where identifiant = ?';
-        conn.query(requeteSql, [user], function (err, data) {
-            var tmp = {};
-            tmp['user'] = user;
-            tmp['url'] = "Votre compte n'est pas validé !";
-            tmp['is_locked'] = 1;
-            info_users_list.push(tmp);
-            users.push(user);
-            res.redirect('index');
+        var params = url.parse(req.url, true).query;
+        var user = params['user'];
+        console.log(user);
+        var index = users.indexOf(user);
+        info_users_list.splice(index, 1);
+        users.splice(index, 1);
+        pool.getConnection(function (err, conn) {
+            var requeteSql = 'update login_web set is_locked=1 where identifiant = ?';
+            conn.query(requeteSql, [user], function (err, data) {
+                var tmp = {};
+                tmp['user'] = user;
+                tmp['url'] = "Votre compte n'est pas validé !";
+                tmp['is_locked'] = 1;
+                info_users_list.push(tmp);
+                users.push(user);
+                res.redirect('index');
+            });
+            conn.release();
         });
-        conn.release();
-    });
     }else{
         res.redirect('login');
     }
 
 });
 
-router.get('/activUser', function (req, res, next) {
+ router.get('/activUser', function (req, res, next) {
     if (req.session.isConnected) {
         var params = url.parse(req.url, true).query;
         var user = params['user'];
@@ -241,7 +245,7 @@ router.get('/activUser', function (req, res, next) {
 
 });
 
-function push_stream(src, user) {
+ function push_stream(src, user) {
     var json = {};
     json['user'] = user;
     users.push(user);
