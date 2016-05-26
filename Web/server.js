@@ -1,6 +1,7 @@
 // ---------------Environnement-----------------
-var mysql = require('node-mysql');
-var DB = mysql.DB;
+var mysql = require('mysql');
+var conf = require('./conf/conf.json');
+var pool = mysql.createPool(conf.db);
 var url = require('url');
 var app = require('express')();
 var bodyParser = require("body-parser");
