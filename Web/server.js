@@ -91,8 +91,12 @@ app.get("/streamer", function (req, res) {
 });
 
 app.get('/startlive', function (req, res) {
+	if (req.session.isConnected) {
 	var user = req.session.userName;
     res.render('startlive', { "userName": user });
+	}
+	else
+		res.render('login', { 'erreur': 'Hâte de partager vos meilleurs moments ? Connectez-vous !' });
 });
 
 app.get('/about', function (req, res) {
