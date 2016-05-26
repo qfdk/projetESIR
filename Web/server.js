@@ -58,6 +58,7 @@ app.get('/stream', function (req, res) {
 
 		var json= []; 
 		var userName = req.session.userName;
+		console.log("Username ==> "+userName);
 		var req = client.get("http://kfc-harpie:8080/api/list", function (data, response) {
 			json = data;
 			json.push({ user: 'Yveline', url: 'rtmp://rtmp.infomaniak.ch/livecast/yveline1' });
