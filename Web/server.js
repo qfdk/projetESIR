@@ -189,7 +189,7 @@ io.on('connection', function(socket){
 	
   socket.on('chat-message', function(msg, pseudo, stream){
 	  if (msg != "")
-    	io.emit('chat-message', pseudo, socket.color, escape(msg), stream);
+    	io.emit('chat-message', escape(pseudo), socket.color, escape(msg), escape(stream));
   });
 });
 
