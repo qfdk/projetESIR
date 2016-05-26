@@ -1,7 +1,7 @@
 {
   "name": "projetesir",
   "version": "1.0.0",
-  "description": "Projet ESir WebRtc Stream",
+  "description": "Projet ESIR RTMP Stream",
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
