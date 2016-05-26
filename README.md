@@ -25,9 +25,8 @@ Comme dit précédemment, nous utilisons un ensemble de Raspberry Pi dans le but
 - [Web (Client + player)](https://github.com/qfdk/projetESIR/tree/master/Web)
 
 ## Todo
+- Réunion à KFC(Mcdonalds)
 
-- Réunion à KFC(Markdonalds)
-- PPT ?
 
 ## License Apache 2
 World is powered by solitude
