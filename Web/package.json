@@ -2,12 +2,12 @@
   "name": "projetesir",
   "version": "1.0.0",
   "description": "Projet ESir WebRtc Stream",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
-    "node-mysql": "latest",
+    "mysql": "latest",
     "express": "latest",
     "url": "latest",
     "path": "latest",
