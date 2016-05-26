@@ -64,7 +64,7 @@ app.get('/stream', function (req, res) {
 			json.push({ user: 'Yveline', url: 'rtmp://rtmp.infomaniak.ch/livecast/yveline1' });
 			json.push({ user: 'Best moment decima', url: 'https://www.youtube.com/watch?v=krqdIHzrRBc' });
 
-			res.render('streams', { json, "userName": req.session.userName });
+			res.render('streams', { json, "userName": userName });
 		});
 		req.on('error', function (err) {
 			console.log('something went wrong on requete rest!!', err.request.options);
