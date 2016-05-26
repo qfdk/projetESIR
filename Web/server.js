@@ -36,9 +36,9 @@ server.listen(3000, function(){
 
 var db = new DB({
     host: 'localhost',
-    user: 'root',
-    password: 'maiga',
-    database: 'Projet_esir',
+    user: 'projet',
+    password: '',
+    database: 'projet',
     connectionLimit: 50,
     useTransaction: {
 		connectionLimit: 1
