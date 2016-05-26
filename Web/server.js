@@ -101,9 +101,9 @@ app.get("/streamer",function(req,res){
 	res.redirect('stream');
 });
 
-app.get('/team', function (req, res) {
+app.get('/startlive', function (req, res) {
 	var user = req.session.userName;
-    res.render('team', { "userName": user });
+    res.render('startlive', { "userName": user });
 });
 
 app.get('/about', function (req, res) {
