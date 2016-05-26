@@ -1,9 +1,9 @@
 {
   "db": {
-    "host": "kfc-nginx",
-    "user": "projet",
-    "password": "coucousalifou",
-    "database": "projet",
+    "host": "",
+    "user": "",
+    "password": "",
+    "database": "",
     "connectionLimit": 50
   }
 }
