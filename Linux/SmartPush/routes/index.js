@@ -4,28 +4,30 @@ var md5 = require('md5');
 var conf = require('../conf/conf.json');
 
 var mysql = require('mysql');
-//il faut utiliser un pool
 var pool = mysql.createPool(conf.db);
-
+// for ffmpeg
 var exec = require('child_process').exec;
-
 // info_users_list vm(traitement des donnees)
 var vm = conf.vm;
 // users info_users_list (user name)
 var users = [];
-
 // info_users_list de info user(detail)
 var info_users_list = [];
 
+
 var router = express.Router();
 
-
-/* GET home page. */
+/**
+ * redirect
+ */
 router.get('/', function (req, res, next) {
     res.render('login', {login: false});
-    // res.render('index', {title: 'SmartPush', users: info_users_list, vms: vm});
 });
 
+/**
+ * index 
+ * login [required]
+ */
 router.get('/index', function (req, res, next) {
     if (req.session.isConnected) {
         res.render('index', {title: 'SmartPush', users: info_users_list, vms: vm, login: true});
@@ -34,6 +36,9 @@ router.get('/index', function (req, res, next) {
     }
 });
 
+/**
+ * check login
+ */
 router.get('/login', function (req, res, next) {
     if (req.session.isConnected) {
         res.redirect('index');
@@ -42,14 +47,6 @@ router.get('/login', function (req, res, next) {
         res.render('login', {login: false});
     }
 });
-
-router.get('/logout', function (req, res, next) {
-    if (req.session.isConnected) {
-        req.session.destroy();
-    }
-    res.redirect('/');
-});
-
 router.post('/login', function (req, res) {
     if (req.session.isConnected) {
         res.redirect('index');
@@ -67,7 +64,70 @@ router.post('/login', function (req, res) {
         }
     }
 });
+/**
+ * logout
+ */
+router.get('/logout', function (req, res, next) {
+    if (req.session.isConnected) {
+        req.session.destroy();
+    }
+    res.redirect('/');
+});
+/**
+ * 
+ * api time
+ * 
+ */
+router.get('/api', function (req, res, next) {
+    var tmp = {};
+    tmp['status'] = "ok";
+    tmp['msg'] = "SmartPush API";
+    res.json(tmp);
+});
 
+/** 
+ * list de machine
+ */ 
+router.get('/api/listVm', function (req, res, next) {
+    res.json(vm);
+});
+/**
+ * streaming users
+ */
+router.get('/api/list', function (req, res, next) {
+    res.json(info_users_list);
+});
+/**
+ * information client
+ */
+router.get('/api/info', function (req, res, next) {
+    var params = url.parse(req.url, true).query;
+    pool.getConnection(function (err, conn) {
+        var requeteSql = 'select identifiant,is_locked,nom,prenom,email from login_web where identifiant = ?';
+        conn.query(requeteSql, [params['user']], function (err, data) {
+            if (data[0] != undefined) {
+                var tmp = {};
+                tmp['info'] = data[0];
+                tmp['push_url'] = conf.base_url;
+                tmp['key'] = params['user'] + '?user=' + params['user'] + '&passwd=xxx';
+                res.json(tmp);
+            }
+            else {
+                console.log("Identifiants incorrects ....");
+                res.end('falid')
+            }
+            conn.release();
+        });
+    });
+});
+
+/**
+ * play for client.
+ * Client must call this one after that client can stream
+ * OBS uses it too
+ * user=xxx
+ * passwd=sss
+ */
 router.get('/play', function (req, res, next) {
     var params = url.parse(req.url, true).query;
     var user = params['user'];
@@ -102,7 +162,9 @@ router.get('/play', function (req, res, next) {
         conn.release();
     });
 });
-
+/**
+ * add une machine de traitement
+ */
 router.get('/addVm', function (req, res, next) {
     if (req.session.isConnected) {
         var params = url.parse(req.url, true).query;
@@ -114,7 +176,9 @@ router.get('/addVm', function (req, res, next) {
         res.redirect('login');
     }
 });
-
+/**
+ * supprimer une machine de traitement
+ */
 router.get('/removeVm', function (req, res, next) {
     if (req.session.isConnected) {
         var params = url.parse(req.url, true).query;
@@ -127,8 +191,6 @@ router.get('/removeVm', function (req, res, next) {
     }
 
 });
-
-
 router.get('/banUser', function (req, res, next) {
     if (req.session.isConnected) {
     var params = url.parse(req.url, true).query;
@@ -177,48 +239,6 @@ router.get('/activUser', function (req, res, next) {
     }
 
 
-});
-
-
-router.get('/api', function (req, res, next) {
-    var tmp = {};
-    tmp['status'] = "ok";
-    tmp['msg'] = "SmartPush API";
-    res.json(tmp);
-});
-
-router.get('/api/test', function (req, res, next) {
-    res.end('ok');
-});
-// /api/listVm
-router.get('/api/listVm', function (req, res, next) {
-    res.json(vm);
-});
-// /api/info_users_list
-router.get('/api/list', function (req, res, next) {
-    res.json(info_users_list);
-});
-
-// /api/info?user=xxx
-router.get('/api/info', function (req, res, next) {
-    var params = url.parse(req.url, true).query;
-    pool.getConnection(function (err, conn) {
-        var requeteSql = 'select identifiant,is_locked,nom,prenom,email from login_web where identifiant = ?';
-        conn.query(requeteSql, [params['user']], function (err, data) {
-            if (data[0] != undefined) {
-                var tmp = {};
-                tmp['info'] = data[0];
-                tmp['push_url'] = conf.base_url;
-                tmp['key'] = params['user'] + '?user=' + params['user'] + '&passwd=xxx';
-                res.json(tmp);
-            }
-            else {
-                console.log("Identifiants incorrects ....");
-                res.end('falid')
-            }
-            conn.release();
-        });
-    });
 });
 
 function push_stream(src, user) {
