@@ -31,8 +31,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(expressSession({ secret: 'somesecrettokenhere' }));
 
-server.listen(3000, function(){
-  console.log('listening on *:3000');
+server.listen(3000, function () {
+	console.log('listening on *:3000');
 });
 
 // -----------------index-----------------
@@ -55,22 +55,21 @@ app.get('/login', function (req, res) {
 
 app.get('/stream', function (req, res) {
 	if (req.session.isConnected) {
-		
-		var json;
-		client.get("http://kfc-harpie:8080/api/list", function (data, response) {
-			json = data;
-			json.push({user: 'Yveline', url: 'rtmp://rtmp.infomaniak.ch/livecast/yveline1'});
-			json.push({user: 'Best moment decima', url: 'https://www.youtube.com/watch?v=krqdIHzrRBc'});
 
-		
-		/*var urlsDispo = [
-			{ name: 'Test 1', link: 'rtmp://kfc-sisilafamille.istic.univ-rennes1.fr/live/salifou', description: "Video test 1 kfc-raspi" },
-			{ name: 'Steve Job', link: 'https://www.youtube.com/embed/UF8uR6Z6KLc', description: "Steve Jobs Stanford Commencement Address ..." },
-			{ name: 'Yveline', link: 'rtmp://rtmp.infomaniak.ch/livecast/yveline1', description: "Decription de la video 3 ......" },
-			{ name: 'Zizou', link: '//www.youtube.com/watch?v=GE5a6Q2NTKU', description: "Decription de la video frnce vs spain ......" }
-		];
-		*/
-		res.render('streams', {json,"userName":req.session.userName});
+		var json= []; 
+		var userName = req.session.userName;
+		var req = client.get("http://kfc-harpie:8080/api/list", function (data, response) {
+			json = data;
+			json.push({ user: 'Yveline', url: 'rtmp://rtmp.infomaniak.ch/livecast/yveline1' });
+			json.push({ user: 'Best moment decima', url: 'https://www.youtube.com/watch?v=krqdIHzrRBc' });
+
+			res.render('streams', { json, "userName": req.session.userName });
+		});
+		req.on('error', function (err) {
+			console.log('something went wrong on requete rest!!', err.request.options);
+			json.push({ user: 'Yveline', url: 'rtmp://rtmp.infomaniak.ch/livecast/yveline1' });
+			json.push({ user: 'Best moment decima', url: 'https://www.youtube.com/watch?v=krqdIHzrRBc' });
+			res.render('streams', { json, "userName": userName});
 		});
 	}
 	else {
@@ -80,13 +79,13 @@ app.get('/stream', function (req, res) {
 
 app.post("/streamer", function (req, res) {
 	if (req.session.isConnected) {
-		res.render('streamer', { 'stream': req.body.stream,'userName':req.session.userName });
+		res.render('streamer', { 'stream': req.body.stream, 'userName': req.session.userName });
 	} else {
 		res.render('login', { 'erreur': '' });
 	}
 });
 
-app.get("/streamer",function(req,res){
+app.get("/streamer", function (req, res) {
 	res.redirect('stream');
 });
 
@@ -110,13 +109,13 @@ app.get('/logout', function (req, res) {
 
 app.get('/createaccount', function (req, res) {
 	// res.end
-	
+
 	if (req.session.isConnected) {
 		res.redirect('stream');
 	} else {
 
-	res.render('createaccount', { 'erreur': '' });
-}
+		res.render('createaccount', { 'erreur': '' });
+	}
 });
 
 app.post('/login', function (req, res) {
@@ -143,7 +142,7 @@ app.post('/login', function (req, res) {
 					res.render('login', { 'erreur': "Email ou mot de passe incorrect" });
 				}
 			});
-		conn.release();
+			conn.release();
 		});
 	}
 });
@@ -151,41 +150,41 @@ app.post('/login', function (req, res) {
 // ----------------- Creation d'un compte -----------------
 app.post('/createaccount', function (req, res) {
 
-		pool.getConnection(function (err, conn) {
-			var post = {
-				nom: req.body.nom,
-				prenom: req.body.prenom,
-				identifiant: req.body.identifiant,
-				mdp: md5(req.body.mdp),
-				email: req.body.email
-			};
-			conn.query('INSERT INTO login_web SET ?', post, function (error) {
-				if (error) {
-					console.log(error);
-					res.render('createaccount', { 'erreur': "Création du compte impossible" });
-				} else {
-					console.log("Compte créé avec succés ....");
-					res.redirect('login');
-				}
-			});
-			
-			conn.release();
-
+	pool.getConnection(function (err, conn) {
+		var post = {
+			nom: req.body.nom,
+			prenom: req.body.prenom,
+			identifiant: req.body.identifiant,
+			mdp: md5(req.body.mdp),
+			email: req.body.email
+		};
+		conn.query('INSERT INTO login_web SET ?', post, function (error) {
+			if (error) {
+				console.log(error);
+				res.render('createaccount', { 'erreur': "Création du compte impossible" });
+			} else {
+				console.log("Compte créé avec succés ....");
+				res.redirect('login');
+			}
 		});
-	
+
+		conn.release();
+
+	});
+
 });
 
 // ----------------- Chatbox Streamer -----------------
-io.on('connection', function(socket){
-	socket.color = "#" + ((1<<24) * Math.random()|0).toString(16); // Random color chat
-	
-  socket.on('chat-message', function(msg, pseudo, stream){
-	  if (msg != "")
-    	io.emit('chat-message', escape(pseudo), socket.color, escape(msg), escape(stream));
-  });
-  
-  socket.on('disconnect', function() {
-      console.log('Got disconnect!');
-  });
+io.on('connection', function (socket) {
+	socket.color = "#" + ((1 << 24) * Math.random() | 0).toString(16); // Random color chat
+
+	socket.on('chat-message', function (msg, pseudo, stream) {
+		if (msg != "")
+			io.emit('chat-message', escape(pseudo), socket.color, escape(msg), escape(stream));
+	});
+
+	socket.on('disconnect', function () {
+		console.log('Got disconnect!');
+	});
 });
 
