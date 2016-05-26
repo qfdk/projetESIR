@@ -68,11 +68,6 @@ Il a une jolie interface graphique en utilisant `Bootstrap 3`
 
 Example url: http://kfc-harpie:8080/api/{metode}
 
-- listVm
-- list
-- info
-
-
 * listVm
 
 ```json
@@ -143,8 +138,8 @@ Example url: http://kfc-harpie:8080/api/{metode}
 
 ```bash
 $ sudo npm install forever -g   #安装
-$ forever start bin/www          #start/启动
-$ forever stop bin/www           #stop/关闭
+$ forever start app.js          #start/启动
+$ forever stop app.js           #stop/关闭
 ```
 
 ## License Apache 2

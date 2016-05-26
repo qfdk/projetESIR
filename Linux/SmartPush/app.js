@@ -3,13 +3,12 @@ var path = require('path');
 var favicon = require('serve-favicon');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-
 var session = require('express-session');
 
+//configuration
 var conf = require('./conf/conf.json');
 // routes
 var routes = require('./routes/index');
-
 var app = express();
 
 //session
