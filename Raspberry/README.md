@@ -5,10 +5,10 @@
 * gstreamer(√)
 
 
-
 ## x264
 
 Il faut compiler x264 et attendre environ 2h.
+On peut push rtmp stream en live :)
 
 ça ne marche pas git://git.videolan.org/x264 ===> 404
 

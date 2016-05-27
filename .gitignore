@@ -8,3 +8,7 @@ Linux/SmartPush/typings/*
 Linux/SmartPush/node_modules/*
 Linux/SmartPush/conf/conf.json
 Web/conf/conf.json
+
+Web/npm-debug.log
+
+Web/conf/conf.json

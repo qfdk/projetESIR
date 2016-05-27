@@ -143,7 +143,7 @@ var router = express.Router();
                 console.log("Bien connecté ....");
                 res.writeHead(200, {'Content-Type': 'text/json'});
                 if (users.indexOf(user) === -1 && data[0].is_locked === 0) {
-                    var url = conf.base_url + 'live/' + user;
+                    var url = conf.base_url + '/' + user;
                     //push video
                     push_stream(url, user);
                 }
@@ -232,7 +232,7 @@ var router = express.Router();
         pool.getConnection(function (err, conn) {
             var requeteSql = 'update login_web set is_locked=0 where identifiant = ?';
             conn.query(requeteSql, [user], function (err, data) {
-                var url = conf.base_url + 'live/' + user;
+                var url = conf.base_url + '/' + user;
                 push_stream(url, user);
                 res.redirect('index');
             });

@@ -1,9 +1,0 @@
-{
-  "db": {
-    "host": "",
-    "user": "",
-    "password": "",
-    "database": "",
-    "connectionLimit": 50
-  }
-}
