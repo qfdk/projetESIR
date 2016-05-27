@@ -1,8 +1,5 @@
 ## Raspberry
 
-La compilation des dépendances est un peu chiant. Nous avons utilisé la caméra de raspberry.
-
-
 * x264 (√)
 * ffmpeg(√)
 * gstreamer(√)
