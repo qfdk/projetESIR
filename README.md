@@ -16,7 +16,7 @@ Comme dit précédemment, nous utilisons un ensemble de Raspberry Pi dans le but
 - Des machines virtuelles permettant la redirection
 
 ## Les différentes parties
-
+- [中文版](https://github.com/qfdk/NNLLS/)
 - [Rasberry (Caméra)](https://github.com/qfdk/projetESIR/tree/master/Raspberry
 )
 
