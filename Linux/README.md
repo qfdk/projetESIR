@@ -51,7 +51,7 @@ Example url: http://kfc-harpie:8080/api/{metode}
 
 * listVm
 
-```json
+```
 [
   "rtmp:\/\/kfc-streaming.istic.univ-rennes1.fr\/live",
   "rtmp:\/\/kfc-sisilafamille.istic.univ-rennes1.fr\/live",
@@ -61,7 +61,7 @@ Example url: http://kfc-harpie:8080/api/{metode}
 
 * list
 
-```json
+```
 // cas invalide
 [
   {
@@ -83,7 +83,7 @@ Example url: http://kfc-harpie:8080/api/{metode}
 
 * info?user=xx
 
-```json
+```
 {
   "info": {
     "identifiant": "salifou1",
@@ -100,7 +100,7 @@ Example url: http://kfc-harpie:8080/api/{metode}
 ```
 
 ## Configuration de Nginx-rtmp-module
-```json
+```
 rtmp {
     server {
             listen 1935;
@@ -123,7 +123,7 @@ rtmp {
 
 ## Configuration de KFC-*(traitement)
 
-```json
+```
 rtmp {
     server {
             listen 1935;
@@ -159,7 +159,7 @@ rtmp {
 Ajouter l'option dans confige, puis on peut avoir le format m3u8,
 Example
 
-```json
+```
 # HLS
 
         # For HLS to work please create a directory in tmpfs (/tmp/hls here)
