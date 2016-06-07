@@ -16,13 +16,14 @@ Comme dit précédemment, nous utilisons un ensemble de Raspberry Pi dans le but
 - Des machines virtuelles permettant la redirection
 
 ## Les différentes parties
-- [中文版](https://github.com/qfdk/NNLLS/)
-- [Rasberry (Caméra)](https://github.com/qfdk/projetESIR/tree/master/Raspberry
-)
 
-- [Linux (SmartPush system + kfc-* + kfc-nginx)](https://github.com/qfdk/projetESIR/tree/master/Linux)
+- [中文版(La version chinoise va continuer à developper)](https://github.com/qfdk/NNLLS/)
+
+- [Rasberry (Caméra&Machine)](https://github.com/qfdk/projetESIR/tree/master/Raspberry)
+
+- [Linux (SmartPush + API)](https://github.com/qfdk/projetESIR/tree/master/Linux)
  
-- [Web (Client + player)](https://github.com/qfdk/projetESIR/tree/master/Web)
+- [Web (Client)](https://github.com/qfdk/projetESIR/tree/master/Web)
 
 ## SQL
 
